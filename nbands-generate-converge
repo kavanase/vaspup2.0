@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Check all needed files exist
+
+[ ! -f input/CONFIG ] && echo "CONFIG file not found in ./input/ directory" && exit
+[ ! -f input/INCAR ] && echo "INCAR file not found in ./input/ directory" && exit
+[ ! -f input/POTCAR ] && echo "POTCAR file not found in ./input/ directory" && exit
+[ ! -f input/KPOINTS ] && echo "KPOINTS file not found in ./input/ directory" && exit
+[ ! -f input/POSCAR ] && echo "POSCAR file not found in ./input/ directory" && exit
+[ ! -f input/job ] && echo "job file not found in ./input/ directory\njob submission will not work" && exit
+
+# Read CONFIG file to get parameters
+source input/CONFIG
+
+# Converge ENMAX
+if [ "$conv_nbands" -eq "1" ]; then
+  [ -d nbands_converge ] && rm nbands_converge -rf
+  mkdir nbands_converge
+  cd nbands_converge
+  for i in $(eval echo "{$nbands_start..$nbands_end..$nbands_step}"); do
+    mkdir "nbands_$i"
+    cd "nbands_$i"
+    cp ../../input/KPOINTS .
+    cp ../../input/INCAR .
+    cp ../../input/POTCAR .
+    cp ../../input/POSCAR .
+    sed -i "s/NBANDS .*$/NBANDS  = $i/g" INCAR
+    [ -f ../../input/job ] && cp ../../input/job .
+
+    [ "$run_vasp" -eq "1" ] && qsub -N nbands${i}${name} job
+    cd ..
+  done
+  cd ..
+fi

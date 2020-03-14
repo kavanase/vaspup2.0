@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Check all needed files exist
+
+[ ! -f input/CONFIG ] && echo "CONFIG file not found in ./input/ directory" && exit
+[ ! -f input/INCAR ] && echo "INCAR file not found in ./input/ directory" && exit
+[ ! -f input/POTCAR ] && echo "POTCAR file not found in ./input/ directory" && exit
+[ ! -f input/KPOINTS ] && echo "KPOINTS file not found in ./input/ directory" && exit
+[ ! -f input/POSCAR ] && echo "POSCAR file not found in ./input/ directory" && exit
+[ ! -f input/job ] && echo "job file not found in ./input/ directory\njob submission will not work" && exit
+
+# Read CONFIG file to get parameters
+source input/CONFIG
+
+# Converge ENMAX
+if [ "$conv_enmax" -eq "1" ]; then
+  [ -d cutoff_converge ] && rm cutoff_converge -rf
+  mkdir cutoff_converge
+  cd cutoff_converge
+  for i in $(eval echo "{$enmax_start..$enmax_end..$enmax_step}"); do
+    mkdir "cutoff_$i"
+    cd "cutoff_$i"
+    cp ../../input/KPOINTS .
+    cp ../../input/INCAR .
+    cp ../../input/POTCAR .
+    cp ../../input/POSCAR .
+    sed -i "s/ENMAX .*$/ENMAX  = $i eV/g" INCAR
+    sed -i "s/ENCUT .*$/ENCUT  = $i eV/g" INCAR
+    [ -f ../../input/job ] && cp ../../input/job .
+
+    [ "$run_vasp" -eq "1" ] && qsub -N e${i}${name} job
+    cd ..
+  done
+  cd ..
+fi
+
+# Converge k-points
+if [ "$conv_kpoint" -eq "1" ]; then
+  [ -d kpoint_converge ] && rm kpoint_converge -rf
+  mkdir "kpoint_converge"
+  cd "kpoint_converge"
+  n=1;
+
+  IFS=',' read -ra ADDR <<< "$kpoints" # Split the kpoints by comma
+  for i in "${ADDR[@]}"; do
+    sub=${i//[ ]/_}
+    mkdir "kpoint_$sub"
+    cd "kpoint_$sub"
+    cp ../../input/KPOINTS .
+    cp ../../input/INCAR .
+    cp ../../input/POTCAR .
+    cp ../../input/POSCAR .
+    [ -f ../../input/job ] && cp ../../input/job .
+
+    if ! sed -i "s/$kpoint_start/$i/g" KPOINTS ; then
+      echo "KPOINT not formatted correctly. Exiting... "
+      exit
+    fi
+
+    [ "$run_vasp" -eq "1" ] && qsub -N k${sub}${name} job
+    let n=n+1
+    cd ..
+  done
+  cd ..
+fi
