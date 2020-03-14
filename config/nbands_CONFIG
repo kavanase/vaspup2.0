@@ -1,0 +1,9 @@
+# This is the default config for automating convergence.
+# Make sure to rename to CONFIG before running
+
+conv_nbands="1"		# 1 for ON, 0 for OFF
+nbands_start="120"	# Value to start enmax calcs from also value in INCAR
+nbands_end="300"		# Value to end enmax calcs on
+nbands_step="20"		# Increment to use
+
+run_vasp="1"		# Run vasp after generating the files? (1 for ON, 0 for OFF)

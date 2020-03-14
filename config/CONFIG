@@ -1,0 +1,13 @@
+# This is the default config for automating convergence.
+# Make sure to rename to CONFIG before running
+
+conv_enmax="1"		# 1 for ON, 0 for OFF
+enmax_start="300"	# Value to start enmax calcs from also value in INCAR
+enmax_end="900"		# Value to end enmax calcs on
+enmax_step="50"		# Increment to use
+
+conv_kpoint="1"		# 1 for ON, 0 for OFF
+kpoint_start="5 5 4"	# Needs to be exactly the same line as in KPOINTS file
+kpoints="3 3 2,4 4 3,5 5 4,6 6 5,7 7 6,8 8 7,9 9 8"		#All the kpoints mesh's you want to try, seperated by a comma
+
+run_vasp="1"		# Run vasp after generating the files? (1 for ON, 0 for OFF)
