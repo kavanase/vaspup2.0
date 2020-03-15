@@ -9,4 +9,4 @@ nbands_end="300"		# Value to end NBANDS calcs on
 nbands_step="20"		# NBANDS increment
 
 run_vasp="1"		# Run VASP after generating the files? (1 for ON, 0 for OFF)
-name="CdTe" # Name to append to each jobname 
+#name="CdTe" # Optional name to append to each jobname (remove "#")
