@@ -31,7 +31,7 @@ for i in */CONTCAR; do
   let n=n+1
 done
 echo "Directory:                   Epsilon_Opt X,Y,Z:                     Difference EpsOpt X,Y,Z:" > header
-cat header data >&1 | tee Convergence_Data
+cat header data >&1 | tee NBANDS_Convergence_Data
 rm -f header
 rm -f data
 
