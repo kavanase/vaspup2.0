@@ -1,9 +1,12 @@
-# This is the default config for automating convergence.
+# This is config for automating NBANDS convergence.
+# (For LOPTICS calculation)(High-frequency dielectric constant)
 # Make sure to rename to CONFIG before running
 
 conv_nbands="1"		# 1 for ON, 0 for OFF
-nbands_start="120"	# Value to start enmax calcs from also value in INCAR
-nbands_end="300"		# Value to end enmax calcs on
-nbands_step="20"		# Increment to use
+nbands_start="120"	# Value to start NBANDS calcs from
+# Need to include NBANDS flag in INCAR 
+nbands_end="300"		# Value to end NBANDS calcs on
+nbands_step="20"		# NBANDS increment
 
-run_vasp="1"		# Run vasp after generating the files? (1 for ON, 0 for OFF)
+run_vasp="1"		# Run VASP after generating the files? (1 for ON, 0 for OFF)
+name="CdTe" # Name to append to each jobname 
