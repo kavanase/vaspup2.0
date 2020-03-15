@@ -12,7 +12,15 @@
 # Read CONFIG file to get parameters
 source input/CONFIG
 
-# Converge ENMAX
+# Check that NBANDS flag is in INCAR
+if grep -Fxq "NBANDS" INCAR
+then 
+pass
+else 
+echo "NBANDS flag missing from INCAR"
+fi
+
+# Converge NBANDS
 if [ "$conv_nbands" -eq "1" ]; then
   [ -d nbands_converge ] && rm nbands_converge -rf
   mkdir nbands_converge
