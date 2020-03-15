@@ -31,7 +31,7 @@ for i in */CONTCAR; do
   let n=n+1
 done
 echo "Directory:       Epsilon 100,010,001:                     Difference 100,010,001:" > header
-cat header data > Convergence_Data
+cat header data >&1 | tee Convergence_Data
 rm -f header
 rm -f data
 
