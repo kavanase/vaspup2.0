@@ -197,7 +197,7 @@ Instead for convenience, one can auto-generate the kpoints with a line of `bash`
 k="3 3 2"; for i in {4..9}; do k="$k,$i $i $(( i-1 ))"; done; \
 sed -i "s/kpoints=.*/kpoints=\'$k\'/" input/CONFIG; grep kpoints input/CONFIG
 ```
-(Note in this case that the appropriate **_k_**-point meshes were determined using [kgrid-series](https://github.com/WMD-group/kgrid)). Example output:
+(Note in this case that the appropriate **_k_**-point meshes were determined using the [kgrid-series](https://github.com/WMD-group/kgrid)) package developed by Adam Jackson. Example output:
 <img src="https://github.com/kavanase/vaspup2.0/blob/master/Examples/auto_generate_kpoints_example.png">
 
 ## Disclaimer
