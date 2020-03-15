@@ -12,7 +12,7 @@ for i in */CONTCAR; do
   energy_total=$(grep TOTEN $folder/OUTCAR | awk '{print $5}' | tail -1 | tr -d '\n') # tr is to remove the trailing newline
   energy_per_atom=$(echo "scale = 7; $energy_total / $n_atoms" | bc)
 
-  echo -n -e "$name\t$energy_total\t$energy_per_atom" >> data
+  echo -n -e "$name\t\t$energy_total\t$energy_per_atom" >> data
 
   if [ "$n" -ne "0" ]; then # the first line will not have a difference therefore ignore it
     energy_prev=$(sed "${n}q;d" data | awk '{print $3}')
@@ -24,7 +24,7 @@ for i in */CONTCAR; do
   echo -n -e "\n" >> data
   let n=n+1
 done
-echo "Directory:  Total Energy/eV: (per atom): Energy difference meV/atom:" > header
+echo "Directory:     Total Energy/eV: (per atom): Energy difference meV/atom:" > header
 cat header data >&1 | tee Convergence_Data
 rm -f header
 rm -f data
