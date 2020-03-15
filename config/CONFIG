@@ -9,7 +9,7 @@ encut_step="50"		# ENCUT increment.
 
 conv_kpoint="1"		# 1 for ON, 0 for OFF (KPOINTS Convergence Testing)
 kpoint_start="5 5 4"	# Needs to be exactly the same line as in KPOINTS file
-kpoints="3 3 2,4 4 3,5 5 4,6 6 5,7 7 6,8 8 7,9 9 8"		#All the kpoints mesh's
+kpoints="3 3 2,4 4 3,5 5 4,6 6 5,7 7 6,8 8 7,9 9 8" # All the kpoints meshes
 # you want to try, seperated by a comma
 
 run_vasp="1"		# Run VASP after generating the files? (1 for ON, 0 for OFF)
