@@ -12,14 +12,14 @@
 # Read CONFIG file to get parameters
 source input/CONFIG
 
-# Converge ENMAX
-if [ "$conv_enmax" -eq "1" ]; then
+# Converge ENCUT
+if [ "$conv_encut" -eq "1" ]; then
   [ -d cutoff_converge ] && rm cutoff_converge -rf
   mkdir cutoff_converge
   cd cutoff_converge
-  for i in $(eval echo "{$enmax_start..$enmax_end..$enmax_step}"); do
-    mkdir "cutoff_$i"
-    cd "cutoff_$i"
+  for i in $(eval echo "{$encut_start..$encut_end..$encut_step}"); do
+    mkdir "e_$i"
+    cd "e_$i"
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
     cp ../../input/POTCAR .
@@ -43,9 +43,9 @@ if [ "$conv_kpoint" -eq "1" ]; then
 
   IFS=',' read -ra ADDR <<< "$kpoints" # Split the kpoints by comma
   for i in "${ADDR[@]}"; do
-    sub=${i//[ ]/_}
-    mkdir "kpoint_$sub"
-    cd "kpoint_$sub"
+    sub=${i//[ ]/}
+    mkdir "k_$sub"
+    cd "k_$sub"
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
     cp ../../input/POTCAR .
