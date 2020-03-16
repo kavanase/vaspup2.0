@@ -181,6 +181,7 @@ Installation is quite simple, just clone this git repository and update your `PA
 location of the bin folder. 
 ```bash
 git clone https://github.com/kavanase/vaspup2.0
+cd vaspup2.0/bin && chmod 777 *
 echo 'export PATH="${HOME}/path/to/vaspup2.0/bin:${PATH}"' >> ~/.bashrc
 ```
 
