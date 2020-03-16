@@ -14,7 +14,6 @@ source input/CONFIG
 
 # Converge ENCUT
 if [ "$conv_encut" -eq "1" ]; then
-  [ -d cutoff_converge ] && rm cutoff_converge -rf
   mkdir cutoff_converge
   cd cutoff_converge
   for i in $(eval echo "{$encut_start..$encut_end..$encut_step}"); do
@@ -36,7 +35,6 @@ fi
 
 # Converge k-points
 if [ "$conv_kpoint" -eq "1" ]; then
-  [ -d kpoint_converge ] && rm kpoint_converge -rf
   mkdir "kpoint_converge"
   cd "kpoint_converge"
   n=1;
