@@ -27,12 +27,12 @@ The directory structure should match the below:
 
 ```bash
 ./<Convergence Testing Directory (run script from here)>
-./input
-    /INCAR
-    /KPOINTS
-    /POSCAR
-    /POTCAR
-    /CONFIG
+    ./input
+        /INCAR
+        /KPOINTS
+        /POSCAR
+        /POTCAR
+        /CONFIG
 ```
 - Customise the CONFIG file as you wish (specifying `ENCUT` and **_k_**-point convergence parameters
 and (optionally) the `name` to append to each jobname).
@@ -71,13 +71,13 @@ and `dfpt_INCAR` respectively. _(Note: Rename `dfpt_INCAR` to `INCAR`)_.
 The directory structure should match the below:
 
 ```bash
-./<Convergence Testing Directory (run script from here)>
-./input
-    /INCAR
-    /KPOINTS
-    /POSCAR
-    /POTCAR
-    /CONFIG
+./<DFPT Convergence Testing Directory (run script from here)>
+    ./input
+        /INCAR
+        /KPOINTS
+        /POSCAR
+        /POTCAR
+        /CONFIG
 ```
 - Customise the CONFIG file as you wish (specifying `ENCUT` and **_k_**-point convergence parameters
 and (optionally) the `name` to append to each jobname).
@@ -126,13 +126,13 @@ the [config directory](https://github.com/kavanase/vaspup2.0/tree/master/config)
 The directory structure should match the below:
 
 ```bash
-./<`NBANDS` Convergence Testing Directory (run script from here)>
-./input
-    /INCAR
-    /KPOINTS
-    /POSCAR
-    /POTCAR
-    /CONFIG
+./<NBANDS Convergence Testing Directory (run script from here)>
+    ./input
+        /INCAR
+        /KPOINTS
+        /POSCAR
+        /POTCAR
+        /CONFIG
 ```
 - Customise the CONFIG file as you wish (specifying the `NBANDS` convergence parameters
 and (optionally) the `name` to append to each jobname).
