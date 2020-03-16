@@ -22,7 +22,6 @@ fi
 
 # Converge NBANDS
 if [ "$conv_nbands" -eq "1" ]; then
-  [ -d nbands_converge ] && rm nbands_converge -rf
   mkdir nbands_converge
   cd nbands_converge
   for i in $(eval echo "{$nbands_start..$nbands_end..$nbands_step}"); do
