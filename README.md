@@ -144,7 +144,7 @@ For example, the `nbands_converge/nbands_100` folder will contain the `NBANDS = 
 - Once the calculations have finished running, the `nbands-epsopt-data-converge` script can be run 
 in the `nbands_converge` directory to extract the values for the optical dielectric constant 
 <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> (specifically the 
-$X$, $Y$ and $Z$ components of the `frequency dependent      REAL DIELECTRIC FUNCTION` in the VASP 
+X, Y and Z components of the `frequency dependent      REAL DIELECTRIC FUNCTION` in the VASP 
 `OUTCAR` files). This script will print the convergence data to the terminal 
 (as shown below) as well as saving to a file named `NBANDS_Convergence_Data`. 
 
