@@ -50,9 +50,9 @@ if [ "$conv_kpoint" -eq "1" ]; then
     cp ../../input/POSCAR .
     [ -f ../../input/job ] && cp ../../input/job .
 
-    if ! sed -i "s/$kpoint_start/$i/g" KPOINTS ; then
-      echo "KPOINT not formatted correctly. Exiting... "
-      exit
+    if ! sed -i "4s/.*/${i}/" KPOINTS; then
+        echo "Problem with your KPOINTS pal"
+        exit
     fi
 
     [ "$run_vasp" -eq "1" ] && qsub -N k${sub}${name} job
