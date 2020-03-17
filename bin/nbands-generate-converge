@@ -25,8 +25,8 @@ if [ "$conv_nbands" -eq "1" ]; then
   mkdir nbands_converge
   cd nbands_converge
   for i in $(eval echo "{$nbands_start..$nbands_end..$nbands_step}"); do
-    mkdir "nbands_$i"
-    cd "nbands_$i"
+    mkdir "nbands$i"
+    cd "nbands$i"
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
     cp ../../input/POTCAR .
