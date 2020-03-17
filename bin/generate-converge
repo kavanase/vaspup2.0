@@ -50,7 +50,7 @@ if [ "$conv_kpoint" -eq "1" ]; then
     cp ../../input/POSCAR .
     [ -f ../../input/job ] && cp ../../input/job .
 
-    sed -i "4s/.*/${i}/" KPOINTS; then
+    sed -i "4s/.*/${i}/" KPOINTS
     
     [ "$run_vasp" -eq "1" ] && qsub -N k${sub}${name} job
     let n=n+1
