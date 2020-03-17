@@ -188,7 +188,8 @@ echo 'export PATH="${HOME}/path/to/vaspup2.0/bin:${PATH}"' >> ~/.bashrc
 ## Tips
 For **_k_**-point convergence testing (of ground-state energy or 
 <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}">), 
-the **_k_**-point meshes to be tested must be explicitly provided in the `CONFIG` file, as below: 
+the **_k_**-point meshes to be tested must be explicitly provided in the `CONFIG` file 
+(to allow for non-cubic systems), as below: 
 ```bash
 kpoints="3 3 2,4 4 3,5 5 4,6 6 5,7 7 6,8 8 7,9 9 8" # All the kpoints meshes
 # you want to try, separated by a comma
