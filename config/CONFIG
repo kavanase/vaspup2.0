@@ -3,7 +3,7 @@
 # Make sure to rename to CONFIG before running.
 
 conv_encut="1"		# 1 for ON, 0 for OFF (ENCUT Convergence Testing)
-encut_start="300"	# Value to start ENCUT calcs from. Must match ENCUT value in INCAR.
+encut_start="300"	# Value to start ENCUT calcs from.
 encut_end="900"		# Value to end ENCUT calcs on.
 encut_step="50"		# ENCUT increment.
 
