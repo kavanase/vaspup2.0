@@ -17,8 +17,8 @@ if [ "$conv_encut" -eq "1" ]; then
   mkdir cutoff_converge
   cd cutoff_converge
   for i in $(eval echo "{$encut_start..$encut_end..$encut_step}"); do
-    mkdir "e_$i"
-    cd "e_$i"
+    mkdir "e$i"
+    cd "e$i"
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
     cp ../../input/POTCAR .
@@ -42,8 +42,8 @@ if [ "$conv_kpoint" -eq "1" ]; then
   IFS=',' read -ra ADDR <<< "$kpoints" # Split the kpoints by comma
   for i in "${ADDR[@]}"; do
     sub=${i//[ ]/}
-    mkdir "k_$sub"
-    cd "k_$sub"
+    mkdir "k$sub"
+    cd "k$sub"
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
     cp ../../input/POTCAR .
