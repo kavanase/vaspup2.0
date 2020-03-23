@@ -1,3 +1,4 @@
+# vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2020
 # This is config for automating NBANDS convergence.
 # (For LOPTICS calculation)(High-frequency dielectric constant)
 # Make sure to rename to CONFIG before running
