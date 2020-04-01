@@ -13,11 +13,12 @@
 source input/CONFIG
 
 # Check that NBANDS flag is in INCAR
-if grep -Fxq "NBANDS" INCAR
+if grep "NBANDS" input/INCAR
 then 
 pass
 else 
 echo "NBANDS flag missing from INCAR"
+exit
 fi
 
 # Converge NBANDS
