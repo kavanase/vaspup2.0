@@ -1,0 +1,22 @@
+#!/bin/bash
+# vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2020
+# Cheeky little script to generate convergence-test kpoints using
+# the excellent kgrid package.
+# Doesn't work on Mac OSX as it has a different version of sed
+
+# Usage: (in "input" directory with POSCAR and CONFIG files present)
+# (and "kpoints" mentioned in CONFIG file)
+# kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff}
+
+# Test if correct usage and/or help message #wedoitallbaby
+if [ "$#" -ne 2 ]; then
+echo "vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2020
+Usage: (in "input" directory with POSCAR and CONFIG files present)
+(and "kpoints" mentioned in CONFIG file)
+$ kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff)
+(Recommended: min = 10, max = 30)"
+exit
+fi
+
+kpts=$(kgrid-series --min $1 --max $2 POSCAR | awk 'NR>2,ORS="," {print $3,$4,$5}')
+sed -i "s/kpoints.*/kpoints=\'$kpts\'/" ./CONFIG
