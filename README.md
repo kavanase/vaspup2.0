@@ -204,7 +204,7 @@ Usage: (in input directory with POSCAR and CONFIG files present)
 $ kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff)
 (Recommended: min = 10, max = 30)
 ```
-This script uses the excellent [kgrid](https://github.com/WMD-group/kgrid)) package developed by Adam Jackson to generate appropriate **_k_**-point meshes corresponding to a given real-space length cutoff (in Angstrom). 
+This script uses the excellent [kgrid](https://github.com/WMD-group/kgrid) package developed by Adam Jackson to generate appropriate **_k_**-point meshes corresponding to a given real-space length cutoff (in Angstrom). 
 
 ## Disclaimer
 
