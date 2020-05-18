@@ -56,7 +56,7 @@ Example output from `data-converge`:
 The calculated value for the ionic contribution to the static dielectric constant
 <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}">
 (<img src="https://render.githubusercontent.com/render/math?math=\epsilon_0 = \epsilon_{Ionic}">+<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">) is quite sensitive to
-both the plane wave kinetic energy cutoff `ENCUT` and the **_k_**-point density. This is demonstrated
+both the plane wave kinetic energy cutoff `ENCUT` and the **_k_**-point density, with more expensive parameter values necessary (relative to ground-state-energy-converged values) due to the requirement of accurate ionic forces. This is demonstrated
 in the [Dielectric_Constants_Convergence](https://github.com/kavanase/vaspup2.0/blob/master/Dielectric_Constants_Convergence.ipynb) Jupyter notebook.
 Thus, calculation of the <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}"> should be accompanied by convergence tests with respect to these parameters.
 
