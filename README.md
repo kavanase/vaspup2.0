@@ -175,6 +175,17 @@ Additionally, it should be noted that VASP automatically rounds `NBANDS` to the 
 of `NPAR` = # of cores / (`NCORE` * `KPAR`). So ideally these parameters should be set so that
 `NPAR` is a factor of the `NBANDS` increment in the `CONFIG` file.
 
+
+##### `syntax error`
+If `data-converge` gives the output `(standard_in) 1: syntax error`, then it means that `vaspup2.0`
+is having trouble parsing some or all of the calculation results. Typically, this means that some
+or all of the calculations failed, and so the solution is to look at the output files of the 
+calculations and decide what needs to be changed for the caculations to be successful (e.g. reduce
+`NCORE` in `INCAR` to avoid parallelisation errors, increase `job` CPU hours to allow calculation
+to converge in time etc.), then re-run `generate-converge`. Also, if only some of the calculations
+failed, it is usually obvious from the output of `data-converge` in this case (Hint: they're the
+ones with batshit crazy energies), now go fix those calculations! 
+
 ## Installation
 
 Installation is quite simple, just clone this git repository and update your `PATH` to include the
