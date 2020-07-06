@@ -14,6 +14,16 @@ for ground-state energy convergence testing and `POTCAR` generation.
 Perturbation Theory (DFPT).
 - Convergence testing of <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> (optical / high-frequency dielectric constant) with respect to `NBANDS`, calculated with using the method of [Furthmüller et al.](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.73.045112) (`LOPTICS = True`).
 
+## Installation
+
+Installation is quite simple, just clone this git repository and update your `PATH` to include the
+location of the bin folder.
+```bash
+git clone https://github.com/kavanase/vaspup2.0
+cd vaspup2.0/bin && chmod 777 *
+echo 'export PATH="${HOME}/path/to/vaspup2.0/bin:${PATH}"' >> ~/.bashrc
+```
+
 ## Implementation
 
 ### Ground-State Energy Convergence
@@ -186,15 +196,15 @@ to converge in time etc.), then re-run `generate-converge`. Also, if only some o
 failed, it is usually obvious from the output of `data-converge` in this case (Hint: they're the
 ones with batshit crazy energies), now go fix those calculations! 
 
-## Installation
-
-Installation is quite simple, just clone this git repository and update your `PATH` to include the
-location of the bin folder.
+##### `integer expression expected`
+If you have both `vaspup2.0` and the older `vaspup` on your `$PATH`, and are using the `vaspup2.0`
+`CONFIG` files, you may encounter the following error:
 ```bash
-git clone https://github.com/kavanase/vaspup2.0
-cd vaspup2.0/bin && chmod 777 *
-echo 'export PATH="${HOME}/path/to/vaspup2.0/bin:${PATH}"' >> ~/.bashrc
+/home/path/to/src/vaspup/bin/generate-converge: line 16: [: : integer expression expected
 ```
+In this case, the advice is to remove the older `vaspup` commands from your `$PATH` and/or
+remove the `vaspup` folder from your system.
+
 
 ## Tips
 For **_k_**-point convergence testing (of ground-state energy or
