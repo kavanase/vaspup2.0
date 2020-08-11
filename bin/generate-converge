@@ -17,8 +17,13 @@ if [ "$conv_encut" -eq "1" ]; then
   mkdir cutoff_converge
   cd cutoff_converge
   for i in $(eval echo "{$encut_start..$encut_end..$encut_step}"); do
-    mkdir "e$i"
-    cd "e$i"
+    if [ "$i" -gt 999 ]; then
+    dirname="e_$i" # Add underscore to ensure correct ordering for data-converge
+    else
+    dirname="e$i"
+    fi
+    mkdir "$dirname"
+    cd "$dirname"
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
     cp ../../input/POTCAR .
@@ -41,7 +46,15 @@ if [ "$conv_kpoint" -eq "1" ]; then
 
   IFS=',' read -ra ADDR <<< "$kpoints" # Split the kpoints by comma
   for i in "${ADDR[@]}"; do
-    sub=${i//[ ]/}
+    firstk=$(echo $i | head -n1 | awk '{print $1;}')
+    sub=${i//[ ]/,}
+    if [ "$firstk" -gt 19 ]; then
+    sub="__$sub" # Add double underscore for >19 to ensure correct ordering for data-converge
+
+    elif [ "$firstk" -gt 9 ]; then
+    sub="_$sub" # Add underscore for >9 to ensure correct ordering for data-converge
+    fi
+
     mkdir "k$sub"
     cd "k$sub"
     cp ../../input/KPOINTS .
