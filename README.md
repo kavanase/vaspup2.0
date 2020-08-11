@@ -14,6 +14,16 @@ for ground-state energy convergence testing and `POTCAR` generation.
 Perturbation Theory (DFPT).
 - Convergence testing of <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> (optical / high-frequency dielectric constant) with respect to `NBANDS`, calculated with using the method of [Furthmüller et al.](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.73.045112) (`LOPTICS = True`).
 
+## Installation
+
+Installation is quite simple, just clone this git repository and update your `PATH` to include the
+location of the bin folder.
+```bash
+git clone https://github.com/kavanase/vaspup2.0
+cd vaspup2.0/bin && chmod 777 *
+echo 'export PATH="${HOME}/path/to/vaspup2.0/bin:${PATH}"' >> ~/.bashrc
+```
+
 ## Implementation
 
 ### Ground-State Energy Convergence
@@ -56,7 +66,7 @@ Example output from `data-converge`:
 The calculated value for the ionic contribution to the static dielectric constant
 <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}">
 (<img src="https://render.githubusercontent.com/render/math?math=\epsilon_0 = \epsilon_{Ionic}">+<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">) is quite sensitive to
-both the plane wave kinetic energy cutoff `ENCUT` and the **_k_**-point density. This is demonstrated
+both the plane wave kinetic energy cutoff `ENCUT` and the **_k_**-point density, with more expensive parameter values necessary (relative to ground-state-energy-converged values) due to the requirement of accurate ionic forces. This is demonstrated
 in the [Dielectric_Constants_Convergence](https://github.com/kavanase/vaspup2.0/blob/master/Dielectric_Constants_Convergence.ipynb) Jupyter notebook.
 Thus, calculation of the <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}"> should be accompanied by convergence tests with respect to these parameters.
 
@@ -175,15 +185,26 @@ Additionally, it should be noted that VASP automatically rounds `NBANDS` to the 
 of `NPAR` = # of cores / (`NCORE` * `KPAR`). So ideally these parameters should be set so that
 `NPAR` is a factor of the `NBANDS` increment in the `CONFIG` file.
 
-## Installation
 
-Installation is quite simple, just clone this git repository and update your `PATH` to include the
-location of the bin folder.
+##### `syntax error`
+If `data-converge` gives the output `(standard_in) 1: syntax error`, then it means that `vaspup2.0`
+is having trouble parsing some or all of the calculation results. Typically, this means that some
+or all of the calculations failed, and so the solution is to look at the output files of the 
+calculations and decide what needs to be changed for the caculations to be successful (e.g. reduce
+`NCORE` in `INCAR` to avoid parallelisation errors, increase `job` CPU hours to allow calculation
+to converge in time etc.), then re-run `generate-converge`. Also, if only some of the calculations
+failed, it is usually obvious from the output of `data-converge` in this case (Hint: they're the
+ones with batshit crazy energies), now go fix those calculations! 
+
+##### `integer expression expected`
+If you have both `vaspup2.0` and the older `vaspup` on your `$PATH`, and are using the `vaspup2.0`
+`CONFIG` files, you may encounter the following error:
 ```bash
-git clone https://github.com/kavanase/vaspup2.0
-cd vaspup2.0/bin && chmod 777 *
-echo 'export PATH="${HOME}/path/to/vaspup2.0/bin:${PATH}"' >> ~/.bashrc
+/home/path/to/src/vaspup/bin/generate-converge: line 16: [: : integer expression expected
 ```
+In this case, the advice is to remove the older `vaspup` commands from your `$PATH` and/or
+remove the `vaspup` folder from your system.
+
 
 ## Tips
 For **_k_**-point convergence testing (of ground-state energy or
