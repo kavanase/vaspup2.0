@@ -26,8 +26,14 @@ if [ "$conv_nbands" -eq "1" ]; then
   mkdir nbands_converge
   cd nbands_converge
   for i in $(eval echo "{$nbands_start..$nbands_end..$nbands_step}"); do
-    mkdir "nbands$i"
-    cd "nbands$i"
+    if [ "$i" -gt 999 ]; then
+    dirname="nbands_$i" # Add underscore to ensure correct ordering for data-converge
+    else
+    dirname="nbands$i"
+    fi
+    mkdir "$dirname"
+    cd "$dirname"
+
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
     cp ../../input/POTCAR .

@@ -3,7 +3,13 @@
 rm -f data # delete data file if exists
 # Note that we ignore off-diagonal elements in this script
 n=0
-for i in */CONTCAR; do
+shopt -s extglob
+for i in {!(*_*),*_*}/CONTCAR; do
+  if [[ $i == *k_* ]]; then
+    spacing="\t"
+  else
+    spacing="\t\t"
+  fi
 
   folder=${i/CONTCAR/}
   name=${folder//[\/]/} # folder name without slashes
@@ -14,7 +20,7 @@ for i in */CONTCAR; do
   ionic_dielectric_tensor010=$(grep -A 3 "IONIC CONTRIBUTION" $folder/OUTCAR | tail -1 | awk '{print $2}' | tr -d '\n')
   ionic_dielectric_tensor001=$(grep -A 4 "IONIC CONTRIBUTION" $folder/OUTCAR | tail -1 | awk '{print $3}' | tr -d '\n')
 
-  echo -n -e "$name\t\t$ionic_dielectric_tensor100\t$ionic_dielectric_tensor010\t$ionic_dielectric_tensor001" >> data
+  echo -n -e "$name$spacing$ionic_dielectric_tensor100\t$ionic_dielectric_tensor010\t$ionic_dielectric_tensor001" >> data
 
   if [ "$n" -ne "0" ]; then # the first line will not have a difference therefore ignore it
     prev100=$(sed "${n}q;d" data | awk '{print $2}' )
