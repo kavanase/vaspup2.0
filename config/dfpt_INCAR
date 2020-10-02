@@ -1,6 +1,6 @@
 ALGO = Normal
 LEPSILON = True # DFPT Calculation
-ISYM = -1 # Symmetry off for DFPT
+ISYM = -1 # Symmetry off for DFPT (if using NCORE)
 EDIFF = 1e-07
 EDIFFG = -0.003
 ENCUT = 300 # NEED ENCUT/ENMAX FLAG FOR GENERATE-CONVERGE
@@ -15,7 +15,7 @@ LASPH = True
 LORBIT = 11
 LREAL = False # Reciprocal space projections for accurate forces
 LWAVE = True
-NCORE = 9
+NCORE = 12
 NEDOS = 2000
 NELM = 100
 NSW = 1 # One ionic step
