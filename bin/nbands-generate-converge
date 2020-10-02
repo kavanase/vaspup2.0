@@ -26,11 +26,14 @@ if [ "$conv_nbands" -eq "1" ]; then
   mkdir nbands_converge
   cd nbands_converge
   for i in $(eval echo "{$nbands_start..$nbands_end..$nbands_step}"); do
-    if [ "$i" -gt 999 ]; then
-    dirname="nbands_$i" # Add underscore to ensure correct ordering for data-converge
-    else
-    dirname="nbands$i"
+    sub=""
+    if [ "$i" -gt 999 ]; then # Add double underscore for >999 to ensure correct ordering for nbands-epsopt-data-converge
+    sub="__"
+    elif [ "$i" -gt 99 ]; then  # Add single underscore for >99 to ensure correct ordering for nbands-epsopt-data-converge
+    sub="_"
     fi
+
+    dirname="nbands$sub$i" 
     mkdir "$dirname"
     cd "$dirname"
 
