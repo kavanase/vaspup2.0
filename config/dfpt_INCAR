@@ -1,6 +1,6 @@
 ALGO = Normal
 LEPSILON = True # DFPT Calculation
-ISYM = -1 # Symmetry off for DFPT
+ISYM = -1 # Symmetry off for DFPT (if using NCORE)
 EDIFF = 1e-07
 EDIFFG = -0.003
 ENCUT = 300 # NEED ENCUT/ENMAX FLAG FOR GENERATE-CONVERGE
