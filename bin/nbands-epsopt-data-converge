@@ -4,17 +4,18 @@ rm -f data # delete data file if exists
 # Note that we ignore off-diagonal elements in this script
 n=0
 shopt -s extglob
-for i in {!(*_*),*_*}/CONTCAR > /dev/null # Redirect output to null so we don't get warning when no dirs with underscores in names are present
+for i in {!(*_*),*_*}/CONTCAR 
 do
-
+  if ! [[ $i == "*_*/CONTCAR" ]]
+  then
   folder=${i/CONTCAR/}
   name=${folder//[\/]/} # folder name without slashes
 
   n_atoms=$(sed '7q;d' $i | awk '{sum=0; for (i=1; i<=NF; i++) { sum+= $i } print sum}') # sum over row 7 of the CONTCAR
-  optic_dielectric_tensor=$(grep -A 3 "frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects) density-density" $folder/OUTCAR | tail -1 | tr -d '\n') # tr is to remove the trailing newline
-  optic_dielectric_tensorX=$(grep -A 3 "frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects) density-density" $folder/OUTCAR | tail -1 | awk '{print $2}' | tr -d '\n')
-  optic_dielectric_tensorY=$(grep -A 3 "frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects) density-density" $folder/OUTCAR | tail -1 | awk '{print $3}' | tr -d '\n')
-  optic_dielectric_tensorZ=$(grep -A 3 "frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects) density-density" $folder/OUTCAR | tail -1 | awk '{print $4}' | tr -d '\n')
+  optic_dielectric_tensor=$(grep -s -A 3 "frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects) density-density" $folder/OUTCAR | tail -1 | tr -d '\n') # tr is to remove the trailing newline
+  optic_dielectric_tensorX=$(grep -s -A 3 "frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects) density-density" $folder/OUTCAR | tail -1 | awk '{print $2}' | tr -d '\n')
+  optic_dielectric_tensorY=$(grep -s -A 3 "frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects) density-density" $folder/OUTCAR | tail -1 | awk '{print $3}' | tr -d '\n')
+  optic_dielectric_tensorZ=$(grep -s -A 3 "frequency dependent      REAL DIELECTRIC FUNCTION (independent particle, no local field effects) density-density" $folder/OUTCAR | tail -1 | awk '{print $4}' | tr -d '\n')
 
   echo -n -e "$name\t$optic_dielectric_tensorX\t$optic_dielectric_tensorY\t$optic_dielectric_tensorZ" >> data
 
@@ -28,7 +29,7 @@ do
 
     echo -n -e "\t$diffx \t $diffy \t $diffz" >> data
   fi
-
+  fi
   echo -n -e "\n" >> data
   let n=n+1
 done

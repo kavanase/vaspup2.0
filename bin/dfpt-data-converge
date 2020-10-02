@@ -5,6 +5,8 @@ rm -f data # delete data file if exists
 n=0
 shopt -s extglob
 for i in {!(*_*),*_*}/CONTCAR; do
+  if ! [[ $i == "*_*/CONTCAR" ]]
+  then
   if [[ $i == *k_* ]]; then
     spacing="\t"
   else
@@ -31,6 +33,7 @@ for i in {!(*_*),*_*}/CONTCAR; do
     diff001=$(echo "$prev001 - $ionic_dielectric_tensor001" | bc)
 
     echo -n -e "\t$diff100 \t $diff010 \t $diff001" >> data
+  fi
   fi
 
   echo -n -e "\n" >> data

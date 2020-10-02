@@ -5,6 +5,8 @@ rm -f data # delete data file if exists
 n=0
 shopt -s extglob
 for i in {!(*_*),*_*}/CONTCAR; do
+  if ! [[ $i == "*_*/CONTCAR" ]]
+  then
   if [[ $i == *k_* ]]; then
     spacing="\t"
   else
@@ -25,6 +27,7 @@ for i in {!(*_*),*_*}/CONTCAR; do
     energy_diff=$(echo "scale = 7; ($energy_prev - $energy_per_atom) * 1000" | bc)
 
     echo -n -e "\t$energy_diff" >> data
+  fi
   fi
 
   echo -n -e "\n" >> data
