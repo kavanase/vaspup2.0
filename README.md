@@ -29,8 +29,8 @@ echo 'export PATH="${HOME}/path/to/vaspup2.0/bin:${PATH}"' >> ~/.bashrc
 ### Ground-State Energy Convergence
 To quickly set up a ground-state energy convergence test, the following steps are required:
 
-- Create a folder named `input`, containing `INCAR`, `KPOINTS`, `POSCAR`, and `POTCAR` files,
-in addition to a `CONFIG` file. Example `CONFIG` and `INCAR` files are provided in
+- Create a folder named `input`, containing `INCAR`, `KPOINTS`, `POSCAR`, and `POTCAR` VASP input files,
+a jobscript file (`job`) and a `CONFIG` file. Example `CONFIG` and `INCAR` files are provided in
 the [config directory](https://github.com/kavanase/vaspup2.0/tree/master/config) named `CONFIG`
 and `energy_INCAR` respectively. _(Note: Rename `energy_INCAR` to `INCAR`)_.
 The directory structure should match the below:
@@ -43,6 +43,7 @@ The directory structure should match the below:
         /POSCAR
         /POTCAR
         /CONFIG
+        /job
 ```
 - Customise the CONFIG file as you wish (specifying `ENCUT` and **_k_**-point convergence parameters
 and (optionally) the `name` to append to each jobname).
@@ -52,6 +53,8 @@ A series of folders will be created, with the folder names matching the calculat
 For example, the `cutoff_converge/e450` folder will contain the `ENCUT = 450 eV` calculation and
 the `kpoint_converge/k664` folder will contain the calculation with a **_k_**-mesh of
 <img src="https://render.githubusercontent.com/render/math?math=6\times6\times4">.
+
+Note that `vaspup2.0` uses the SGE `qsub` job submission command by default, but this can easily be modified in the bash scripts.
 
 - Once the calculations have finished running, the `data-converge` script can be used to extract the
 total energies from the VASP output. This script will print the convergence data to the terminal
@@ -88,6 +91,7 @@ The directory structure should match the below:
         /POSCAR
         /POTCAR
         /CONFIG
+        /job
 ```
 - Customise the CONFIG file as you wish (specifying `ENCUT` and **_k_**-point convergence parameters
 and (optionally) the `name` to append to each jobname).
@@ -143,6 +147,7 @@ The directory structure should match the below:
         /POSCAR
         /POTCAR
         /CONFIG
+        /job
 ```
 - Customise the CONFIG file as you wish (specifying the `NBANDS` convergence parameters
 and (optionally) the `name` to append to each jobname).
