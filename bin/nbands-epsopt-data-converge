@@ -19,6 +19,10 @@ do
 
   echo -n -e "$name\t$optic_dielectric_tensorX\t$optic_dielectric_tensorY\t$optic_dielectric_tensorZ" >> data
 
+  if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then 
+     echo "Electronic self-consistency was not reached for ${name} (i.e. NELM breached), convergence results likely unreliable."
+  fi
+
   if [ "$n" -ne "0" ]; then # the first line will not have a difference therefore ignore it
     prevx=$(sed "${n}q;d" data | awk '{print $2}' )
     diffx=$(echo "$prevx - $optic_dielectric_tensorX" | bc)
