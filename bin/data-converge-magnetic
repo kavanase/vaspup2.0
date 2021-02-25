@@ -40,6 +40,8 @@ for i in {!(*_*),*_*}/CONTCAR; do
     energy_diff=$(echo "scale = 7; ($energy_prev - $energy_per_atom) * 1000" | bc)
 
     echo -n -e "\t${custom_tab}$energy_diff\t${custom_tab}${custom_tab}${custom_tab}$mag" >> data
+  else
+    echo -n -e "\t${custom_tab}\t\t${custom_tab}${custom_tab}${custom_tab}$mag" >> data
   fi
 
   echo -n -e "\n" >> data
