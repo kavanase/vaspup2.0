@@ -8,6 +8,8 @@ custom_tab='  '
 for i in {!(*_*),*_*}/CONTCAR; do
   if ! [[ $i == "*_*/CONTCAR" ]]
   then
+  if ! [[ $i == "!(*_*)/CONTCAR" ]]
+  then
   if [[ $i == *k_* ]]; then
     spacing="\t"
   else
@@ -20,9 +22,12 @@ for i in {!(*_*),*_*}/CONTCAR; do
   n_atoms=$(sed '7q;d' $i | awk '{sum=0; for (i=1; i<=NF; i++) { sum+= $i } print sum}') # sum over row 7 of the CONTCAR
   energy_total=$(grep TOTEN $folder/OUTCAR | awk '{print $5}' | tail -1 | tr -d '\n') # tr is to remove the trailing newline
   energy_per_atom=$(echo "scale = 7; $energy_total / $n_atoms" | bc)
-  
-  if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then 
-     echo "Electronic self-consistency was not reached for ${name} (i.e. NELM breached), convergence results likely unreliable."
+  nelm=$(grep NELM $folder/OUTCAR | awk '{print $3}' | head -1 | tr -d ";" )
+  n_iter=$(grep Iteration $folder/OUTCAR | awk '{print $4}' | tail -1 | tr -d ")" )
+
+  #if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then  # Only works for VASP 6
+  if [ "$n_iter" == "$nelm" ]; then 
+      echo -e "Electronic self-consistency was not reached for ${name} (i.e. NELM reached),\nconvergence results likely unreliable."
   fi
 
   echo -n -e "$name$spacing$energy_total\t$energy_per_atom" >> data
@@ -33,10 +38,12 @@ for i in {!(*_*),*_*}/CONTCAR; do
 
     echo -n -e "\t${custom_tab}$energy_diff" >> data
   fi
-  fi
 
   echo -n -e "\n" >> data
   let n=n+1
+  fi
+  fi
+  
 done
 echo -e "Note, if your system is magnetic, you should use data-converge-magnetic.\n"
 echo "Directory:     Total Energy/eV: (per atom): Difference (meV/atom):" > header

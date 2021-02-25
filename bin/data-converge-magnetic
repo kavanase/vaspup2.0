@@ -8,6 +8,9 @@ custom_tab='  '
 for i in {!(*_*),*_*}/CONTCAR; do
   if ! [[ $i == "*_*/CONTCAR" ]]
   then
+  if ! [[ $i == "!(*_*)/CONTCAR" ]]
+  then
+
   if [[ $i == *k_* ]]; then
     spacing="\t"
   else
@@ -21,12 +24,16 @@ for i in {!(*_*),*_*}/CONTCAR; do
   energy_total=$(grep TOTEN $folder/OUTCAR | awk '{print $5}' | tail -1 | tr -d '\n') # tr is to remove the trailing newline
   energy_per_atom=$(echo "scale = 7; $energy_total / $n_atoms" | bc)
   mag=$(grep mag $folder/OSZICAR | awk '{print $10}' | tail -1 | tr -d '\n')
+  nelm=$(grep NELM $folder/OUTCAR | awk '{print $3}' | head -1 | tr -d ";" )
+  n_iter=$(grep Iteration $folder/OUTCAR | awk '{print $4}' | tail -1 | tr -d ")" )
+
+  #if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then  # Only works for VASP 6
+  if [ "$n_iter" == "$nelm" ]; then 
+      echo -e "Electronic self-consistency was not reached for ${name} (i.e. NELM reached),\nconvergence results likely unreliable."
+  fi
+
 
   echo -n -e "$name$spacing$energy_total\t$energy_per_atom" >> data
-
-  if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then 
-     echo "Electronic self-consistency was not reached for ${name} (i.e. NELM breached), convergence results likely unreliable."
-  fi
 
   if [ "$n" -ne "0" ]; then # the first line will not have a difference therefore ignore it
     energy_prev=$(sed "${n}q;d" data | awk '{print $3}')
@@ -34,10 +41,12 @@ for i in {!(*_*),*_*}/CONTCAR; do
 
     echo -n -e "\t${custom_tab}$energy_diff\t${custom_tab}${custom_tab}${custom_tab}$mag" >> data
   fi
-  fi
 
   echo -n -e "\n" >> data
   let n=n+1
+  fi
+  fi
+
 done
 echo -e "Magnetisation should be consistent to obtain reasonable convergence results.\n"
 echo "Directory:     Total Energy/eV: (per atom): Difference (meV/atom): Magnetisation:" > header

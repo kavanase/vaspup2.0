@@ -7,6 +7,9 @@ shopt -s extglob
 for i in {!(*_*),*_*}/CONTCAR; do
   if ! [[ $i == "*_*/CONTCAR" ]]
   then
+  if ! [[ $i == "!(*_*)/CONTCAR" ]]
+  then
+
   if [[ $i == *k_* ]]; then
     spacing="\t"
   else
@@ -24,8 +27,12 @@ for i in {!(*_*),*_*}/CONTCAR; do
 
   echo -n -e "$name$spacing$ionic_dielectric_tensor100\t$ionic_dielectric_tensor010\t$ionic_dielectric_tensor001" >> data
 
-  if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then 
-     echo "Electronic self-consistency was not reached for ${name} (i.e. NELM breached), convergence results likely unreliable."
+  nelm=$(grep NELM $folder/OUTCAR | awk '{print $3}' | head -1 | tr -d ";" )
+  n_iter=$(grep Iteration $folder/OUTCAR | awk '{print $4}' | tail -1 | tr -d ")" )
+
+  #if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then  # Only works for VASP 6
+  if [ "$n_iter" == "$nelm" ]; then 
+      echo -e "Electronic self-consistency was not reached for ${name} (i.e. NELM reached),\nconvergence results likely unreliable."
   fi
 
   if [ "$n" -ne "0" ]; then # the first line will not have a difference therefore ignore it
@@ -38,10 +45,12 @@ for i in {!(*_*),*_*}/CONTCAR; do
 
     echo -n -e "\t$diff100 \t $diff010 \t $diff001" >> data
   fi
-  fi
 
   echo -n -e "\n" >> data
   let n=n+1
+  fi
+  fi
+
 done
 echo "Directory:               Epsilon 100,010,001:                     Difference 100,010,001:" > header
 cat header data >&1 | tee DFPT_Convergence_Data

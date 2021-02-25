@@ -8,6 +8,9 @@ for i in {!(*_*),*_*}/CONTCAR
 do
   if ! [[ $i == "*_*/CONTCAR" ]]
   then
+  if ! [[ $i == "!(*_*)/CONTCAR" ]]
+  then
+
   folder=${i/CONTCAR/}
   name=${folder//[\/]/} # folder name without slashes
 
@@ -19,8 +22,12 @@ do
 
   echo -n -e "$name\t$optic_dielectric_tensorX\t$optic_dielectric_tensorY\t$optic_dielectric_tensorZ" >> data
 
-  if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then 
-     echo "Electronic self-consistency was not reached for ${name} (i.e. NELM breached), convergence results likely unreliable."
+  nelm=$(grep NELM $folder/OUTCAR | awk '{print $3}' | head -1 | tr -d ";" )
+  n_iter=$(grep Iteration $folder/OUTCAR | awk '{print $4}' | tail -1 | tr -d ")" )
+
+  #if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then  # Only works for VASP 6
+  if [ "$n_iter" == "$nelm" ]; then 
+      echo -e "Electronic self-consistency was not reached for ${name} (i.e. NELM reached),\nconvergence results likely unreliable."
   fi
 
   if [ "$n" -ne "0" ]; then # the first line will not have a difference therefore ignore it
@@ -33,9 +40,12 @@ do
 
     echo -n -e "\t$diffx \t $diffy \t $diffz" >> data
   fi
-  fi
+
   echo -n -e "\n" >> data
   let n=n+1
+  fi
+  fi
+
 done
 echo "Directory:                   Epsilon_Opt X,Y,Z:                     Difference EpsOpt X,Y,Z:" > header
 cat header data >&1 | tee NBANDS_Convergence_Data
