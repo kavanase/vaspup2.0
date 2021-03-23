@@ -14,7 +14,7 @@
 source input/CONFIG
 
 # Check that NBANDS flag is in INCAR
-if ! grep "NBANDS" input/INCAR
+if ! grep -q "NBANDS" input/INCAR
 then 
 echo "NBANDS flag missing from INCAR"
 fi
