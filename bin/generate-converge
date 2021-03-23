@@ -7,7 +7,8 @@
 [ ! -f input/POTCAR ] && echo "POTCAR file not found in ./input/ directory" && exit
 [ ! -f input/KPOINTS ] && echo "KPOINTS file not found in ./input/ directory" && exit
 [ ! -f input/POSCAR ] && echo "POSCAR file not found in ./input/ directory" && exit
-[ ! -f input/job ] && echo "job file not found in ./input/ directory\njob submission will not work" && exit
+[ ! -f input/job ] && echo "job file not found in ./input/ directory\njob submission will not work\nwill continue and make calculation directories without job submission\nrun_vasp in your input/CONFIG file should be 0..."
+[ -f input/vdw_kernel.bindat ] && echo "vdw_kernel.bindat present in ./input/ directory, will also copy this into each calculation directory"
 
 # Read CONFIG file to get parameters
 source input/CONFIG
@@ -28,6 +29,7 @@ if [ "$conv_encut" -eq "1" ]; then
     cp ../../input/INCAR .
     cp ../../input/POTCAR .
     cp ../../input/POSCAR .
+    [ -f ../../input/vdw_kernel.bindat ] && cp ../../input/vdw_kernel.bindat .
     sed -i "s/ENMAX .*$/ENMAX  = $i eV/g" INCAR
     sed -i "s/ENCUT .*$/ENCUT  = $i eV/g" INCAR
     [ -f ../../input/job ] && cp ../../input/job .
@@ -62,6 +64,7 @@ if [ "$conv_kpoint" -eq "1" ]; then
     cp ../../input/POTCAR .
     cp ../../input/POSCAR .
     [ -f ../../input/job ] && cp ../../input/job .
+    [ -f ../../input/vdw_kernel.bindat ] && cp ../../input/vdw_kernel.bindat .
 
     sed -i "4s/.*/${i}/" KPOINTS
     
