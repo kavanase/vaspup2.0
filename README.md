@@ -210,6 +210,9 @@ If you have both `vaspup2.0` and the older `vaspup` on your `$PATH`, and are usi
 In this case, the advice is to remove the older `vaspup` commands from your `$PATH` and/or
 remove the `vaspup` folder from your system.
 
+Alternatively, this error can occur if a required tag (`conv_encut`, `conv_kpoint`, `run_vasp` etc.) 
+in the `CONFIG` file is commented out.
+
 
 ## Tips
 For **_k_**-point convergence testing (of ground-state energy or
