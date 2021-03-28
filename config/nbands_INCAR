@@ -1,13 +1,12 @@
 ALGO = Normal
 NBANDS = 120 # Include NBANDS flag in INCAR
 LOPTICS = True # Calculate frequency-dependent dielectric function
+CSHIFT = 1e-6 # Less absorption broadening for easier spectrum comparisons
 EDIFF = 1e-07
-EDIFFG = -0.003
 ENCUT = 300 # Previously converged ENCUT
 GGA = Ps # Use PBEsol to get estimate of converged NBANDS value
 IBRION = -1
 ICHARG = 1
-ISIF = 2
 ISMEAR = 0
 ISPIN = 2
 KPAR = 2
