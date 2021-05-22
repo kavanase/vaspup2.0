@@ -31,7 +31,7 @@ To quickly set up a ground-state energy convergence test, the following steps ar
 
 - Create a folder named `input`, containing `INCAR`, `KPOINTS`, `POSCAR`, and `POTCAR` VASP input files,
 a jobscript file (`job`) and a `CONFIG` file. Example `CONFIG` and `INCAR` files are provided in
-the [config directory](https://github.com/kavanase/vaspup2.0/tree/master/config) named `CONFIG`
+the [input](input) directory named `CONFIG`
 and `energy_INCAR` respectively. _(Note: Rename `energy_INCAR` to `INCAR`)_.
 The directory structure should match the below:
 
@@ -79,7 +79,7 @@ the following steps are required (note similarity to ground-state energy converg
 
 - Create a folder named `input`, containing appropriate `INCAR`, `KPOINTS`, `POSCAR`, and `POTCAR`
 files, in addition to a `CONFIG` file. Example `CONFIG` and `INCAR` files are provided in
-the [config directory](https://github.com/kavanase/vaspup2.0/tree/master/config) named `CONFIG`
+the [input](input) directory named `CONFIG`
 and `dfpt_INCAR` respectively. _(Note: Rename `dfpt_INCAR` to `INCAR`)_.
 The directory structure should match the below:
 
@@ -135,7 +135,7 @@ the following steps are required:
 
 - Create a folder named `input`, containing appropriate `INCAR`, `KPOINTS`, `POSCAR`, and `POTCAR`
 files, in addition to a `CONFIG` file. Example `CONFIG` and `INCAR` files are provided in
-the [config directory](https://github.com/kavanase/vaspup2.0/tree/master/config) named
+the [input](input) directory named
 `nbands_CONFIG` and `nbands_INCAR` respectively. _(Note: Rename to `CONFIG` and `INCAR`)_.
 The directory structure should match the below:
 
