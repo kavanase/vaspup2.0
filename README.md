@@ -210,6 +210,9 @@ If you have both `vaspup2.0` and the older `vaspup` on your `$PATH`, and are usi
 In this case, the advice is to remove the older `vaspup` commands from your `$PATH` and/or
 remove the `vaspup` folder from your system.
 
+Alternatively, this error can occur if a required tag (`conv_encut`, `conv_kpoint`, `run_vasp` etc.) 
+in the `CONFIG` file is commented out.
+
 
 ## Tips
 For **_k_**-point convergence testing (of ground-state energy or
@@ -231,6 +234,14 @@ $ kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff)
 (Recommended: min = 10, max = 30)
 ```
 This script uses the excellent [kgrid](https://github.com/WMD-group/kgrid) package developed by Adam Jackson to generate appropriate **_k_**-point meshes corresponding to a given real-space length cutoff (in Angstrom). 
+
+
+A general recommendation for DFT-calculated dielectric constants is to converge the predicted value to within 0.1, at least, though this of course depends on the target property! 
+For example, this criterion typically gives a well-converged optical absorption spectrum, something which can be quickly verified visually, using:
+```bash
+for i in nbands_*; do cd $i; sumo-optplot --ymax 2e6 --xmax 4; cd ..; done
+```
+then look at the `absorption.pdf` files in each directory.
 
 ## Disclaimer
 
