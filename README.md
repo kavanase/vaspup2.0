@@ -126,7 +126,7 @@ the number of electronic bands included in the calculation (`NBANDS`), with a la
 unoccupied bands required for convergence, as demonstrated in the
 [Dielectric_Constants_Convergence](https://github.com/kavanase/vaspup2.0/blob/master/Dielectric_Constants_Convergence.ipynb) Jupyter notebook.
 Thus, calculation of the <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> should be accompanied by a convergence test with respect to this parameter.
-Note that the calculated value for <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> is not sensitive to either the plane wave kinetic energy cutoff `ENCUT` or the **_k_**-point density, **assuming you are using values that are well-converged with respect to
+Note that the calculated value for <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> is typically not sensitive to either the plane wave kinetic energy cutoff `ENCUT` or the **_k_**-point density, **assuming you are using values that are well-converged with respect to
 the ground-state energy of course!**
 
 
