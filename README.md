@@ -118,6 +118,8 @@ files), but the results for <img src="https://render.githubusercontent.com/rende
 This is demonstrated in the [Dielectric_Constants_Convergence](https://github.com/kavanase/vaspup2.0/blob/master/Dielectric_Constants_Convergence.ipynb) Jupyter notebook
 ("Region of Shit" red-zones).
 
+**Note that this `INCAR` is for calculating the _ionic contribution to the dielectric constant_. If you want to calculate other properties such as the elastic constant, you will need to change `INCAR` tages (e.g. `ISIF = 3` for elastic constants).**
+
 ### Optical Dielectric Constant Convergence
 The calculated value for the optical dielectric constant
 <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">
