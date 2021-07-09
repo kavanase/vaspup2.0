@@ -64,6 +64,8 @@ should be run separately within the folders named `kpoint_converge` and `cutoff_
 Example output from `data-converge`:
 <img src="https://github.com/kavanase/vaspup2.0/blob/master/Examples/data-converge_example.png">
 
+Note that, for semiconductor materials, a denser **_k_**-point mesh is typically required for accurate density of states and optical absorption spectra. See [Density of States & Absorption Spectrum Convergence](#density-of-states-and-absorption-spectrum-convergence) examples below.
+
 
 ### Ionic Dielectric Constant (DFPT) Convergence
 The calculated value for the ionic contribution to the static dielectric constant
@@ -130,7 +132,7 @@ unoccupied bands required for convergence, as demonstrated in the
 Thus, calculation of the <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> should be accompanied by a convergence test with respect to this parameter.
 Note that the calculated value for <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> is typically not sensitive to either the plane wave kinetic energy cutoff `ENCUT` or the **_k_**-point density, **assuming you are using values that are well-converged with respect to
 the ground-state energy!** 
-Additionally, note that the _optical absorption spectrum_, as with the density of states, typically requires a denser k-point mesh to give a converged result, than for total energy or optical dielectric constant. See [Absorption Spectrum Convergence] example below.
+Additionally, note that the _optical absorption spectrum_, as with the density of states, typically requires a denser k-point mesh to give a converged result, than for total energy or optical dielectric constant. See [Density of States & Absorption Spectrum Convergence](#density-of-states-and-absorption-spectrum-convergence) examples below.
 
 
 To quickly set up an `NBANDS` convergence test for <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">,
@@ -246,7 +248,7 @@ for i in nbands_*; do cd $i; sumo-optplot --ymax 2e6 --xmax 4; cd ..; done
 ```
 then look at the `absorption.pdf` files in each directory.
 
-## Density of States & Absorption Spectrum Convergence
+## Density of States and Absorption Spectrum Convergence
 While the total energy and high-frequency dielectric constant <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> were converged to within 1 meV/atom and 0.1 respectively at a **_k_**-point mesh of 3x3x3, convergence of the density of states and absorption spectrum are not reached until much higher **_k_**-point densities of 6x6x6.
 
 <img src="https://github.com/kavanase/vaspup2.0/blob/master/Examples/Cs2SnI6_dos.gif">
