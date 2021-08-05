@@ -5,7 +5,7 @@ GGA = Ps
 IBRION = -1
 ICHARG = 1
 ISIF = 3
-ISMEAR = 0
+ISMEAR = 0 # Note that ISMEAR = -5 will give better DOS convergence wrt kpoints!
 ISPIN = 2
 KPAR = 2
 LASPH = True
