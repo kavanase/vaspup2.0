@@ -23,6 +23,7 @@ git clone https://github.com/kavanase/vaspup2.0
 cd vaspup2.0/bin && chmod 777 *
 echo 'export PATH="${HOME}/path/to/vaspup2.0/bin:${PATH}"' >> ~/.bashrc
 ```
+Replace `path/to` with the location of the `vaspup2.0` on **your** system. <!-- This may seem obvious, but you'd be surprised... -->
 
 ## Implementation
 
