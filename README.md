@@ -10,10 +10,10 @@ for ground-state energy convergence testing and `POTCAR` generation.
 - Convergence testing of ground-state energy with respect to
 `ENCUT` (plane wave kinetic energy cutoff)(i.e. basis set size) and **_k_**-point density
 (specified in the `KPOINTS` file).
-- Convergence testing of <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}"> (ionic contribution to the static dielectric constant
-<img src="https://render.githubusercontent.com/render/math?math=\epsilon_0 = \epsilon_{Ionic}">+<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">) with respect to `ENCUT` and **_k_**-point density, calculated with Density Functional
+- Convergence testing of $\epsilon_{Ionic}$ (ionic contribution to the static dielectric constant
+$\epsilon_0 = \epsilon_{Ionic}$+$\epsilon_{Optic}$) with respect to `ENCUT` and **_k_**-point density, calculated with Density Functional
 Perturbation Theory (DFPT).
-- Convergence testing of <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> (optical / high-frequency dielectric constant) with respect to `NBANDS`, calculated with using the method of [Furthmüller et al.](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.73.045112) (`LOPTICS = True`).
+- Convergence testing of $\epsilon_{Optic}$ (optical / high-frequency dielectric constant) with respect to `NBANDS`, calculated with using the method of [Furthmüller et al.](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.73.045112) (`LOPTICS = True`).
 
 ## Installation
 
@@ -58,7 +58,7 @@ and (optionally) the `name` to append to each jobname).
 A series of folders will be created, with the folder names matching the calculation settings.
 For example, the `cutoff_converge/e450` folder will contain the `ENCUT = 450 eV` calculation and
 the `kpoint_converge/k664` folder will contain the calculation with a **_k_**-mesh of
-<img src="https://render.githubusercontent.com/render/math?math=6\times6\times4">.
+$6\times6\times4$.
 
 Note that `vaspup2.0` uses the SGE `qsub` job submission command by default, but this can easily be modified in the bash scripts.
 
@@ -68,20 +68,21 @@ total energies from the VASP output. This script will print the convergence data
 should be run separately within the folders named `kpoint_converge` and `cutoff_converge`.
 
 Example output from `data-converge`:
-<img src="https://github.com/kavanase/vaspup2.0/blob/master/Examples/data-converge_example.png">
+
+![](Examples/data-converge_example.png)
 
 Note that, for semiconductor materials, a denser **_k_**-point mesh is typically required for accurate density of states and optical absorption spectra. See [Density of States & Absorption Spectrum Convergence](#density-of-states-and-absorption-spectrum-convergence) examples below.
 
 ### Ionic Dielectric Constant (DFPT) Convergence
 
 The calculated value for the ionic contribution to the static dielectric constant
-<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}">
-(<img src="https://render.githubusercontent.com/render/math?math=\epsilon_0 = \epsilon_{Ionic}">+<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">) is quite sensitive to
+$\epsilon_{Ionic}$
+($\epsilon_0 = \epsilon_{Ionic}$+$\epsilon_{Optic}$) is quite sensitive to
 both the plane wave kinetic energy cutoff `ENCUT` and the **_k_**-point density, with more expensive parameter values necessary (relative to ground-state-energy-converged values) due to the requirement of accurate ionic forces. This is demonstrated
-in the [Dielectric_Constants_Convergence](https://github.com/kavanase/vaspup2.0/blob/master/Dielectric_Constants_Convergence.ipynb) Jupyter notebook.
-Thus, calculation of the <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}"> should be accompanied by convergence tests with respect to these parameters.
+in the [Dielectric_Constants_Convergence](Dielectric_Constants_Convergence.ipynb) Jupyter notebook.
+Thus, calculation of the $\epsilon_{Ionic}$ should be accompanied by convergence tests with respect to these parameters.
 
-To quickly set up a convergence test for <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}">,
+To quickly set up a convergence test for $\epsilon_{Ionic}$,
 the following steps are required (note similarity to ground-state energy convergence procedure):
 
 - Create a folder named `input`, containing appropriate `INCAR`, `KPOINTS`, `POSCAR`, and `POTCAR`
@@ -109,21 +110,22 @@ A series of folders will be created, with the folder names matching the calculat
 
 - Once the calculations have finished running, the `dfpt-data-converge` script can be used to
 extract the values for the ionic contribution to the static dielectric constant
-<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}"> (specifically the
+$\epsilon_{Ionic}$ (specifically the
 diagonal terms from the `MACROSCOPIC STATIC DIELECTRIC TENSOR IONIC CONTRIBUTION` in the VASP
 `OUTCAR` files). This script will print the convergence data to the terminal
 (as shown below) as well as saving to a file named `Convergence_Data`. The `data-converge` script
 should be run separately within the folders named `kpoint_converge` and `cutoff_converge`.
 
 Example output from `dfpt-data-converge`:
-<img src="https://github.com/kavanase/vaspup2.0/blob/master/Examples/dfpt-data-converge_example.png">
+
+![](Examples/dfpt-data-converge_example.png)
 
 **Beware `Warning: PSMAXN too small for non-local potential` (in `OUTCAR` and `stdout` files) at too high `ENCUT`!**
 It has been observed that when too large an `ENCUT` is used (depending on the 'hardness' of the
 pseudopotentials - determined by `ENMAX` in the `POTCAR` files) VASP appears to run as normal
 (but with `Warning: PSMAXN too small for non-local potential` printed in the `OUTCAR` and `stdout`
-files), but the results for <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}"> begin to diverge.
-This is demonstrated in the [Dielectric_Constants_Convergence](https://github.com/kavanase/vaspup2.0/blob/master/Dielectric_Constants_Convergence.ipynb) Jupyter notebook
+files), but the results for $\epsilon_{Ionic}$ begin to diverge.
+This is demonstrated in the [Dielectric_Constants_Convergence](Dielectric_Constants_Convergence.ipynb) Jupyter notebook
 ("Region of Shit" red-zones).
 
 **Note that this `INCAR` is for calculating the _ionic contribution to the dielectric constant_. If you want to calculate other properties such as the elastic constant, you will need to change `INCAR` tages (e.g. `ISIF = 3` for elastic constants).**
@@ -131,17 +133,17 @@ This is demonstrated in the [Dielectric_Constants_Convergence](https://github.co
 ### Optical Dielectric Constant Convergence
 
 The calculated value for the optical dielectric constant
-<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">
-(<img src="https://render.githubusercontent.com/render/math?math=\epsilon_0 = \epsilon_{Ionic}">+<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">) is quite sensitive to
+$\epsilon_{Optic}$
+($\epsilon_0 = \epsilon_{Ionic}$+$\epsilon_{Optic}$) is quite sensitive to
 the number of electronic bands included in the calculation (`NBANDS`), with a large number of
 unoccupied bands required for convergence, as demonstrated in the
-[Dielectric_Constants_Convergence](https://github.com/kavanase/vaspup2.0/blob/master/Dielectric_Constants_Convergence.ipynb) Jupyter notebook.
-Thus, calculation of the <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> should be accompanied by a convergence test with respect to this parameter.
-Note that the calculated value for <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> is typically not sensitive to either the plane wave kinetic energy cutoff `ENCUT` or the **_k_**-point density, **assuming you are using values that are well-converged with respect to
+[Dielectric_Constants_Convergence](Dielectric_Constants_Convergence.ipynb) Jupyter notebook.
+Thus, calculation of the $\epsilon_{Optic}$ should be accompanied by a convergence test with respect to this parameter.
+Note that the calculated value for $\epsilon_{Optic}$ is typically not sensitive to either the plane wave kinetic energy cutoff `ENCUT` or the **_k_**-point density, **assuming you are using values that are well-converged with respect to
 the ground-state energy!**
 Additionally, note that the_optical absorption spectrum_, as with the density of states, typically requires a denser k-point mesh to give a converged result, than for total energy or optical dielectric constant. See [Density of States & Absorption Spectrum Convergence](#density-of-states-and-absorption-spectrum-convergence) examples below.
 
-To quickly set up an `NBANDS` convergence test for <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">,
+To quickly set up an `NBANDS` convergence test for $\epsilon_{Optic}$,
 the following steps are required:
 
 - Create a folder named `input`, containing appropriate `INCAR`, `KPOINTS`, `POSCAR`, and `POTCAR`
@@ -170,18 +172,19 @@ For example, the `nbands_converge/nbands_100` folder will contain the `NBANDS = 
 
 - Once the calculations have finished running, the `nbands-epsopt-data-converge` script can be run
 in the `nbands_converge` directory to extract the values for the optical dielectric constant
-<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> (specifically the
+$\epsilon_{Optic}$ (specifically the
 X, Y and Z components of the `frequency dependent      REAL DIELECTRIC FUNCTION` in the VASP
 `OUTCAR` files). This script will print the convergence data to the terminal
 (as shown below) as well as saving to a file named `NBANDS_Convergence_Data`.
 
 Example output from `nbands-epsopt-data-converge`:
-<img src="https://github.com/kavanase/vaspup2.0/blob/master/Examples/nbands-epsopt-data-converge_example.png">
+
+![](Examples/nbands-epsopt-data-converge_example.png)
 
 #### Note
 
 For accurate calculations of the optical dielectric constant
-<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">, it is
+$\epsilon_{Optic}$, it is
 recommended to use Hybrid DFT (such as the HSE06 functional) or a similar level of theory.
 However, in the example `nbands_INCAR` file, the PBEsol GGA DFT functional is used for the purpose
 of efficient use of computational resources during convergence testing.
@@ -189,12 +192,12 @@ It is advised to use this cheaper lower-level theory in order to obtain a good e
 of the required number of electronic bands (`NBANDS`) for a well-converged value of
 the optical dielectric constant. Once the required `NBANDS` has been determined from the GGA DFT
 convergence test, it can then be used in a single Hybrid DFT calculation of
-<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">.
+$\epsilon_{Optic}$.
 
 This procedure assumes similar convergence behaviour (wrt `NBANDS`) within Hybrid DFT as for GGA DFT.
 This is a reasonable assumption in this case, as GGA DFT tends to underestimate band gaps, implying
 that it would require a larger number of electronic bands to cover the required energy range for
-convergence of <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}">,
+convergence of $\epsilon_{Optic}$,
 than for Hybrid DFT.
 Hence, a well-converged value of `NBANDS` for GGA DFT should certainly correspond to a
 well-converged value for Hybrid DFT, as has been observed.
@@ -232,7 +235,7 @@ in the `CONFIG` file is commented out.
 ## Tips
 
 For **_k_**-point convergence testing (of ground-state energy or
-<img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Ionic}">),
+$\epsilon_{Ionic}$),
 the **_k_**-point meshes to be tested must be explicitly provided in the `CONFIG` file
 (to allow for non-cubic systems), as below:
 
@@ -247,7 +250,7 @@ Instead for convenience, one can auto-generate the **_k_**-points using the `kgs
 kgs_gen_kpts
 ```
 
-```
+```txt
 Usage: (in input directory with POSCAR and CONFIG files present)
 (and kpoints mentioned in CONFIG file)
 $ kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff)
@@ -267,12 +270,12 @@ then look at the `absorption.pdf` files in each directory.
 
 ## Density of States and Absorption Spectrum Convergence
 
-While the total energy and high-frequency dielectric constant <img src="https://render.githubusercontent.com/render/math?math=\epsilon_{Optic}"> were converged to within 1 meV/atom and 0.1 respectively at a **_k_**-point mesh of 3x3x3, convergence of the density of states and absorption spectrum are not reached until much higher **_k_**-point densities of 6x6x6.
+While the total energy and high-frequency dielectric constant $\epsilon_{Optic}$ were converged to within 1 meV/atom and 0.1 respectively at a **_k_**-point mesh of 3x3x3, convergence of the density of states and absorption spectrum are not reached until much higher **_k_**-point densities of 6x6x6.
 Note that use of tetrahedron smearing (`ISMEAR = -5`) will typically give better convergence of the density of states (i.e. converged at lower k-point densities) than Gaussian smearing (`ISMEAR = 0`), and is absolutely essential for optical absorption calculations.
 
-<img src="https://github.com/kavanase/vaspup2.0/blob/master/Examples/Cs2SnI6_dos.gif">
+![](Examples/Cs2SnI6_dos.gif)
 
-<img src="https://github.com/kavanase/vaspup2.0/blob/master/Examples/Cs2SnI6_absorption.gif">
+![](Examples/Cs2SnI6_absorption.gif)
 
 ## Disclaimer
 
