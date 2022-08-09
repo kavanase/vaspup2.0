@@ -11,7 +11,7 @@ for ground-state energy convergence testing and `POTCAR` generation.
 `ENCUT` (plane wave kinetic energy cutoff)(i.e. basis set size) and **_k_**-point density
 (specified in the `KPOINTS` file).
 - Convergence testing of $\epsilon_{Ionic}$ (ionic contribution to the static dielectric constant
-$\epsilon_0 = \epsilon_{Ionic}$+$\epsilon_{Optic}$) with respect to `ENCUT` and **_k_**-point density, calculated with Density Functional
+$\epsilon_0 = \epsilon_{Ionic} + \epsilon_{Optic}$) with respect to `ENCUT` and **_k_**-point density, calculated with Density Functional
 Perturbation Theory (DFPT).
 - Convergence testing of $\epsilon_{Optic}$ (optical / high-frequency dielectric constant) with respect to `NBANDS`, calculated with using the method of [Furthmüller et al.](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.73.045112) (`LOPTICS = True`).
 
@@ -77,7 +77,7 @@ Note that, for semiconductor materials, a denser **_k_**-point mesh is typically
 
 The calculated value for the ionic contribution to the static dielectric constant
 $\epsilon_{Ionic}$
-($\epsilon_0 = \epsilon_{Ionic}$+$\epsilon_{Optic}$) is quite sensitive to
+($\epsilon_0 = \epsilon_{Ionic} + \epsilon_{Optic}$) is quite sensitive to
 both the plane wave kinetic energy cutoff `ENCUT` and the **_k_**-point density, with more expensive parameter values necessary (relative to ground-state-energy-converged values) due to the requirement of accurate ionic forces. This is demonstrated
 in the [Dielectric_Constants_Convergence](Dielectric_Constants_Convergence.ipynb) Jupyter notebook.
 Thus, calculation of the $\epsilon_{Ionic}$ should be accompanied by convergence tests with respect to these parameters.
@@ -134,7 +134,7 @@ This is demonstrated in the [Dielectric_Constants_Convergence](Dielectric_Consta
 
 The calculated value for the optical dielectric constant
 $\epsilon_{Optic}$
-($\epsilon_0 = \epsilon_{Ionic}$+$\epsilon_{Optic}$) is quite sensitive to
+($\epsilon_0 = \epsilon_{Ionic} + \epsilon_{Optic}$) is quite sensitive to
 the number of electronic bands included in the calculation (`NBANDS`), with a large number of
 unoccupied bands required for convergence, as demonstrated in the
 [Dielectric_Constants_Convergence](Dielectric_Constants_Convergence.ipynb) Jupyter notebook.
