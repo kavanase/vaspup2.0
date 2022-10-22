@@ -43,7 +43,7 @@ if [ "$conv_nbands" -eq "1" ]; then
     [ -f ../../input/job ] && cp ../../input/job .
     [ -f ../../input/vdw_kernel.bindat ] && cp ../../input/vdw_kernel.bindat .
 
-    [ "$run_vasp" -eq "1" ] && qsub -N nbands${i}${name} job
+    [ "$run_vasp" -eq "1" ] && qsub -N nbands${i}_${name} job
     cd ..
   done
   cd ..
