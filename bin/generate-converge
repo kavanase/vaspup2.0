@@ -34,7 +34,7 @@ if [ "$conv_encut" -eq "1" ]; then
     sed -i "s/ENCUT .*$/ENCUT  = $i eV/g" INCAR
     [ -f ../../input/job ] && cp ../../input/job .
 
-    [ "$run_vasp" -eq "1" ] && qsub -N e${i}${name} job
+    [ "$run_vasp" -eq "1" ] && qsub -N e${i}_${name} job
     cd ..
   done
   cd ..
@@ -68,7 +68,7 @@ if [ "$conv_kpoint" -eq "1" ]; then
 
     sed -i "4s/.*/${i}/" KPOINTS
     
-    [ "$run_vasp" -eq "1" ] && qsub -N k${sub}${name} job
+    [ "$run_vasp" -eq "1" ] && qsub -N k${sub//,/_}_${name} job
     let n=n+1
     cd ..
   done
