@@ -5,6 +5,11 @@ rm -f data # delete data file if exists
 n=0
 shopt -s extglob
 custom_tab='  '
+if [ $(type -P "checkforce") ];
+then echo -e "checkforce is installed, will also check force convergence."
+else echo "checkforce is not on PATH, will not check force convergence."
+fi
+
 for i in {!(*_*),*_*}/CONTCAR; do
   if ! [[ $i == "*_*/CONTCAR" ]]
   then
@@ -26,9 +31,16 @@ for i in {!(*_*),*_*}/CONTCAR; do
   mag=$(grep mag $folder/OSZICAR | awk '{print $10}' | tail -1 | tr -d '\n')
   nelm=$(grep NELM $folder/OUTCAR | awk '{print $3}' | head -1 | tr -d ";" )
   n_iter=$(grep Iteration $folder/OUTCAR | awk '{print $4}' | tail -1 | tr -d ")" )
+  if [ $(type -P "checkforce") ] && [ "$n" -ne "0" ]
+    then residual_force=$("checkforce" -c 0 $folder/OUTCAR | awk '/remainder/ {print $NF}' )
+    force_diff=$(echo "scale = 7; ($force_prev - $residual_force) * 1000" | bc)  # meV/Angstrom averaged
+    force_prev=$residual_force
+  elif [ $(type -P "checkforce") ]
+    then force_prev=$("checkforce" -c 0 $folder/OUTCAR | awk '/remainder/ {print $NF}' )
+  fi
 
   #if $(grep -q "electronic self-consistency was not achieved" $folder/OUTCAR); then  # Only works for VASP 6
-  if [ "$n_iter" == "$nelm" ]; then 
+  if [ "$n_iter" == "$nelm" ]; then
       echo -e "Electronic self-consistency was not reached for ${name} (i.e. NELM reached),\nconvergence results likely unreliable."
   fi
 
@@ -39,9 +51,12 @@ for i in {!(*_*),*_*}/CONTCAR; do
     energy_prev=$(sed "${n}q;d" data | awk '{print $3}')
     energy_diff=$(echo "scale = 7; ($energy_prev - $energy_per_atom) * 1000" | bc)
 
-    echo -n -e "\t${custom_tab}$energy_diff\t${custom_tab}${custom_tab}${custom_tab}$mag" >> data
-  else
-    echo -n -e "\t${custom_tab}\t\t${custom_tab}${custom_tab}${custom_tab}$mag" >> data
+    if [ $(type -P "checkforce") ]
+      then
+      echo -n -e "\t${custom_tab}$energy_diff\t${custom_tab}${custom_tab}${custom_tab}$mag\t\t${custom_tab}$force_diff" >> data
+    else
+      echo -n -e "\t${custom_tab}\t\t${custom_tab}${custom_tab}${custom_tab}$mag" >> data
+    fi
   fi
 
   echo -n -e "\n" >> data
@@ -51,7 +66,13 @@ for i in {!(*_*),*_*}/CONTCAR; do
 
 done
 echo -e "Magnetisation should be consistent to obtain reasonable convergence results.\n"
-echo "Directory:     Total Energy/eV: (per atom): Difference (meV/atom): Magnetisation:" > header
+if [ $(type -P "checkforce") ]
+  then
+    echo "Directory:     Total Energy/eV: (per atom): Difference (meV/atom): Magnetisation: Average Force Difference (meV/Å)" > header
+  else
+    echo "Directory:     Total Energy/eV: (per atom): Difference (meV/atom): Magnetisation:" > header
+fi
+
 cat header data >&1 | tee Convergence_Data
 rm -f header
 rm -f data
