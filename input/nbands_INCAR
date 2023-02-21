@@ -6,17 +6,16 @@ EDIFF = 1e-07
 ENCUT = 300 # Previously converged ENCUT
 GGA = Ps # Use PBEsol to get estimate of converged NBANDS value
 IBRION = -1
-ICHARG = 1
 ISMEAR = -5 # Best convergence wrt kpoints for optics/DOS calculations (won't work with a 1x1x1 k-grid!)
 ISPIN = 2
-KPAR = 2
-LASPH = True
 LORBIT = 11
 LREAL = False # Reciprocal space projection required for LOPTICS calc
-LWAVE = True
-NCORE = 12
 NEDOS = 2000
 NELM = 100
 NSW = 0
 PREC = Accurate
 SIGMA = 0.05
+
+# Parallelisation settings:
+KPAR = 2
+NCORE = 6

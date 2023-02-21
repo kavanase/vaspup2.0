@@ -1,4 +1,4 @@
-# vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2020
+# vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
 # This is the default config for automating convergence.
 # Works for ground-state energy convergence and DFPT convergence.
 # Make sure to rename to CONFIG before running.

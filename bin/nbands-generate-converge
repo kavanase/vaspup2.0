@@ -1,5 +1,5 @@
 #!/bin/bash
-# vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2020
+# vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
 # Check all needed files exist
 
 [ ! -f input/CONFIG ] && echo "CONFIG file not found in ./input/ directory" && exit

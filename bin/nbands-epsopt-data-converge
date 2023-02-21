@@ -1,5 +1,5 @@
 #!/bin/bash
-# vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2020
+# vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
 rm -f data # delete data file if exists
 # Note that we ignore off-diagonal elements in this script
 n=0

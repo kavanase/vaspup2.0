@@ -256,11 +256,20 @@ Instead for convenience, one can auto-generate the **_k_**-points using the `kgs
 kgs_gen_kpts
 ```
 
+This will auto-populate the `CONFIG` file with the **_k_**-point meshes corresponding to real-space cutoff distances 
+between 5 Å and 25 Å (default values – typically good for semiconductors and insulators, may need to be increased for metals). 
+These real-space cutoff distances can be specified as arguments to the script in the format 
+`kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff}`, if they need to be changed.
+
+```bash
+kgs_gen_kpts -h  # "-h" shows help message
+```
+
 ```txt
-Usage: (in input directory with POSCAR and CONFIG files present)
-(and kpoints mentioned in CONFIG file)
-$ kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff)
-(Recommended: min = 10, max = 30)
+vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
+Usage: in 'input' directory with POSCAR and CONFIG files present, and 'kpoints' mentioned in CONFIG file.
+$ kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff}
+(Default: min = 5, max = 25 – max likely needs to be increased for metals)
 ```
 
 This script uses the excellent [kgrid](https://github.com/WMD-group/kgrid) package developed by Adam Jackson to generate appropriate **_k_**-point meshes corresponding to a given real-space length cutoff (in Angstrom).
