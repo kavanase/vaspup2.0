@@ -5,7 +5,8 @@ rm -f data # delete data file if exists
 n=0
 shopt -s extglob
 custom_tab='  '
-if [ $(type -P "checkforce") ];
+
+if [ -x "$(command -v checkforce)" ]
 then echo -e "checkforce is installed, will also check force convergence."
 else echo "checkforce (from https://github.com/bjmorgan/VASP-Utilities) is not on PATH, will not check force convergence."
 fi
@@ -29,11 +30,11 @@ for i in {!(*_*),*_*}/CONTCAR; do
   energy_per_atom=$(echo "scale = 7; $energy_total / $n_atoms" | bc)
   nelm=$(grep NELM $folder/OUTCAR | awk '{print $3}' | head -1 | tr -d ";" )
   n_iter=$(grep Iteration $folder/OUTCAR | awk '{print $4}' | tail -1 | tr -d ")" )
-  if [ $(type -P "checkforce") ] && [ "$n" -ne "0" ]
+  if [ -x "$(command -v checkforce)" ] && [ "$n" -ne "0" ]
     then residual_force=$("checkforce" -c 0 $folder/OUTCAR | awk '/remainder/ {print $NF}' )
     force_diff=$(echo "scale = 7; ($force_prev - $residual_force) * 1000" | bc)  # meV/Angstrom averaged
     force_prev=$residual_force
-  elif [ $(type -P "checkforce") ]
+  elif [ -x "$(command -v checkforce)" ]
     then force_prev=$("checkforce" -c 0 $folder/OUTCAR | awk '/remainder/ {print $NF}' )
   fi
 
@@ -47,7 +48,7 @@ for i in {!(*_*),*_*}/CONTCAR; do
   if [ "$n" -ne "0" ]; then # the first line will not have a difference therefore ignore it
     energy_prev=$(sed "${n}q;d" data | awk '{print $3}')
     energy_diff=$(echo "scale = 7; ($energy_prev - $energy_per_atom) * 1000" | bc)
-    if [ $(type -P "checkforce") ]
+    if [ -x "$(command -v checkforce)" ]
       then 
       echo -n -e "\t${custom_tab}$energy_diff\t\t${custom_tab}$force_diff" >> data
     else
@@ -62,7 +63,7 @@ for i in {!(*_*),*_*}/CONTCAR; do
   
 done
 echo -e "Note, if your system is magnetic, you should use data-converge-magnetic.\n"
-if [ $(type -P "checkforce") ]
+if [ -x "$(command -v checkforce)" ]
   then
   echo "Directory:     Total Energy/eV: (per atom): Difference (meV/atom): Average Force Difference (meV/Å):" > header
   else
