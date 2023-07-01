@@ -6,9 +6,8 @@ n=0
 shopt -s extglob
 custom_tab='  '
 
-if [ -x "$(command -v checkforce)" ]
-then echo -e "checkforce is installed, will also check force convergence."
-else echo "checkforce (from https://github.com/bjmorgan/VASP-Utilities) is not on PATH, will not check force convergence."
+if ! [ -x "$(command -v checkforce)" ]
+then echo -e "checkforce (from https://github.com/bjmorgan/VASP-Utilities) is not on PATH, will not check force convergence."
 fi
 
 for i in {!(*_*),*_*}/CONTCAR; do

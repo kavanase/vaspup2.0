@@ -1,0 +1,113 @@
+#! /usr/bin/perl -w
+
+# checkforce v0.2.3
+# Checks for convergence of geometry optimisations in VASP
+# last updated 5/1/12 
+# written by Benjamin J. Morgan; https://morgan-group-bath.github.io/
+
+use Getopt::Long;
+use utf8;
+use strict;
+
+my $verstring = '0.2.2';
+my $verbose = '';    # option variable with default value (false)
+my $convergence = ''; # option variable with default value (false), used later to store convergence
+my $help = ''; # option variable with default value (false)
+my $convFromOutcar = 1; # option varabile with default value (true)
+my $filename = 'OUTCAR'; # input file with default value (OUTCAR)
+my ($theseforces, $excessforce, $nforces, $maxforce, $noverforce);
+
+GetOptions ('verbose' => \$verbose, 
+            'convergence=f' => \$convergence, 
+            'file=s' => \$filename,
+            'help' => \$help, 
+            'outcar' => \$convFromOutcar);
+
+if ( $help ){
+    printf "checkforce v$verstring
+Usage: checkforce [OPTION]... [FILE]
+List force convergence from VASP OUTCAR
+
+Optional arguments:
+  -h, --help                  print this message
+
+  -c, --convergence=CONV      set force convergence to CONV [this will override --outcar]
+  -o, --outcar                read force convergence from OUTCAR 
+  -v, --verbose               show convergence status for all atoms
+
+Standard output:
+remainder: < sum{force on atom - force convergence} / number of atoms >
+maxiumum: < max non-converged forces >
+not-opt: < number of non-converged forces > / < number of atoms >\n";
+exit 0;
+}
+
+if ($convergence) {$convFromOutcar = 0}
+if ($ARGV[0]) {$filename = $ARGV[0]}
+
+if (! -e $filename) {
+    print "checkforce: $filename: No such file or directory\n";
+    exit 1;
+}
+
+my @outcar = `cat $filename`;
+
+while (@outcar) {
+    my @thisline = split /\s+/,shift(@outcar);
+    next unless defined $thisline[1];
+    if ( $convFromOutcar ){
+        if ($thisline[1] =~ /EDIFFG/){
+            $convergence = $thisline[3]*-1.0;
+        }
+    }
+    if ($thisline[1] =~ /POSITION/){
+        shift(@outcar);
+        @thisline = split /\s+/,shift(@outcar);
+        $theseforces = "";
+        $excessforce = 0.0;
+        $maxforce = 0.0;
+        $noverforce = 0;
+        $nforces = 0.0;
+        until ($thisline[1] =~ m/--/) {
+            my $i;
+            for ($i=4; $i <= 6; $i++) {
+                if ($thisline[$i] > 0) {
+                    $theseforces = "$theseforces   $thisline[$i]";
+                } else {
+                    $theseforces = "$theseforces  $thisline[$i]";
+                }
+            }
+            for ($i=4; $i <= 6; $i++) {
+                if ($thisline[$i]**2 > $convergence**2) {
+                    $theseforces = "$theseforces   ****";
+                } else {
+                    $theseforces = "$theseforces   conv";
+                }
+            }
+            my $thisforce = sprintf "%f", sqrt($thisline[4]*$thisline[4] + $thisline[5]*$thisline[5] + $thisline[6]*$thisline[6]);
+            if ($thisforce > $maxforce) {
+                $maxforce = $thisforce;
+            }
+            if ($thisforce > $convergence) {
+                $theseforces = "$theseforces   $thisforce   ****";
+                $excessforce += ($thisforce - $convergence);
+                $noverforce ++;
+            } else {
+                $theseforces = "$theseforces   $thisforce   conv";
+            }
+            $theseforces = "$theseforces\n";
+            $nforces++;
+            @thisline = split /\s+/,shift(@outcar);
+        }
+    }
+}
+
+if ($verbose){
+    print "$theseforces\n";
+}
+
+if (defined $nforces) { # check that at least one set of forces has been outputted
+    printf "remainder:\t%g\nmaximum:\t%g\nnot-opt:\t%g / %g\n", $excessforce/$nforces, $maxforce, $noverforce, $nforces;
+} else {
+    printf "remainder:\t#\nmaximum:\t#\nnot-opt:\t# / #\n";
+}

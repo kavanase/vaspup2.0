@@ -7,16 +7,14 @@ for ground-state energy convergence testing and `POTCAR` generation.
 
 ## vaspup2.0 Functionality includes
 
-- Convergence testing of ground-state energy with respect to
-`ENCUT` (plane wave kinetic energy cutoff)(i.e. basis set size) and **_k_**-point density
-(specified in the `KPOINTS` file).
-- Convergence testing of atomic forces, if the [vasppy](https://github.com/bjmorgan/vasppy) is installed 
-(and so the `checkforce` script is executable on `$PATH`) with respect to `ENCUT` 
-(plane wave kinetic energy cutoff)(i.e. basis set size) and **_k_**-point density
-(specified in the `KPOINTS` file).
+- Convergence testing of ground-state energy with respect to `ENCUT` (plane wave kinetic energy cutoff)
+  (i.e. basis set size) and **_k_**-point density (specified in the `KPOINTS` file).
+- Convergence testing of atomic forces with respect to `ENCUT` (plane wave kinetic energy cutoff)(i.e. 
+  basis set size) and **_k_**-point density (specified in the `KPOINTS` file), which uses the `checkforce` 
+  script written by [Dr Ben Morgan](https://morgan-group-bath.github.io/) 🙌 
 - Convergence testing of $\epsilon_{Ionic}$ (ionic contribution to the static dielectric constant
-$\epsilon_0 = \epsilon_{Ionic} + \epsilon_{Optic}$) with respect to `ENCUT` and **_k_**-point density, calculated with Density Functional
-Perturbation Theory (DFPT).
+  $\epsilon_0 = \epsilon_{Ionic} + \epsilon_{Optic}$) with respect to `ENCUT` and **_k_**-point density, 
+  calculated with Density Functional Perturbation Theory (DFPT).
 - Convergence testing of $\epsilon_{Optic}$ (optical / high-frequency dielectric constant) with respect to `NBANDS`, calculated with using the method of [Furthmüller et al.](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.73.045112) (`LOPTICS = True`).
 
 ## Installation
@@ -70,8 +68,6 @@ Note that `vaspup2.0` uses the SGE `qsub` job submission command by default, but
 total energies from the VASP output. This script will print the convergence data to the terminal
 (as shown below) as well as saving to a file named `Convergence_Data`. The `data-converge` script
 should be run separately within the folders named `kpoint_converge` and `cutoff_converge`.
-If [vasppy](https://github.com/bjmorgan/vasppy) is installed (and so the `checkforce` script is executable on `$PATH`),
-then the force convergence data will also be printed.
 
 Example output from `data-converge`:
 
