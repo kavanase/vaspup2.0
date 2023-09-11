@@ -37,7 +37,7 @@ To quickly set up a ground-state energy convergence test, the following steps ar
 - Create a folder named `input`, containing `INCAR`, `KPOINTS`, `POSCAR`, and `POTCAR` VASP input files,
 a jobscript file (`job`) and a `CONFIG` file. Example `CONFIG` and `INCAR` files are provided in
 the [input](input) directory named `CONFIG`
-and `energy_INCAR` respectively. _(Note: Rename `energy_INCAR` to `INCAR`)_.
+and `energy_INCAR` respectively. _(Note: Rename `energy_INCAR` to `INCAR`, and set `ISPIN = 1` if your system is non-magnetic for faster calculations)_.
 The directory structure should match the below:
 
 ```bash
