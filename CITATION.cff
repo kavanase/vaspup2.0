@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Kavanagh"
+  given-names: "Seán R."
+  orcid: "https://orcid.org/0000-0003-4577-9647"
+title: "vaspup2.0"
+version: 1.0
+doi: 10.5281/zenodo.8408542
+date-released: 2023-10-04
+url: "https://github.com/kavanase/vaspup2.0"
+references:
+  - type: software
+    authors:
+    - family-names: "Kavanagh"
+      given-names: "Seán R."
+      orcid: "https://orcid.org/0000-0003-4577-9647"
+      email: s.kavanagh19@imperial.ac.uk
+      website: https://seankavanagh.com
+    title: vaspup2.0
+    version: 1.0
+    doi: 10.5281/zenodo.8408542
+    repository-code: https://github.com/kavanase/vaspup2.0
+    repository-artifact: https://doi.org/10.5281/zenodo.8408542
+    date-published: 2023-10-04
+    keywords:
+    - "DFT"
+    - "VASP"
+    - "Convergence Testing"
+    license: MIT
+    url: https://github.com/kavanase/vaspup2.0
