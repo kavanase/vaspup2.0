@@ -286,6 +286,11 @@ Note that use of tetrahedron smearing (`ISMEAR = -5`) will typically give better
 
 ![](Examples/Cs2SnI6_absorption.gif)
 
+
+## Citation
+If you use `vaspup2.0` in your work, please cite as:
+S. R. Kavanagh, vaspup2.0 Zenodo DOI: 10.5281/zenodo.8408542 2023.
+
 ## Disclaimer
 
 This program is not affiliated with VASP. This program is made available under the MIT License; you are free to modify and use the code, but do so at your own risk.
