@@ -71,6 +71,10 @@ Example output from `data-converge`:
 
 ![](Examples/data-converge_example.png)
 
+Example output from `data-converge-magnetic`:
+
+![](Examples/data-converge-magnetic_example.png)
+
 Note that, for semiconductor materials, a denser **_k_**-point mesh is typically required for accurate density of states and optical absorption spectra. See [Density of States & Absorption Spectrum Convergence](#density-of-states-and-absorption-spectrum-convergence) examples below.
 
 ### Ionic Dielectric Constant (DFPT) Convergence
