@@ -1,10 +1,16 @@
 #!/bin/bash
 # vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
+# revised by Xiangchao Meng (xiangchao.meng.22@ucl.ac.uk), 08/10/2023
 rm -f data # delete data file if exists
 
 n=0
 shopt -s extglob
 custom_tab='  '
+
+# The bc command is not compatible when the checkforce output is in sci-form (e.g. 1e-05).
+sci2dec() {  # sci2dec() converts sci-form to numerical form
+    printf "%.10f" "$1"
+}
 
 if ! [ -x "$(command -v checkforce)" ]
 then echo -e "checkforce (from https://github.com/bjmorgan/VASP-Utilities) is not on PATH, will not check force convergence."
@@ -30,8 +36,10 @@ for i in {!(*_*),*_*}/CONTCAR; do
   nelm=$(grep NELM $folder/OUTCAR | awk '{print $3}' | head -1 | tr -d ";" )
   n_iter=$(grep Iteration $folder/OUTCAR | awk '{print $4}' | tail -1 | tr -d ")" )
   if [ -x "$(command -v checkforce)" ] && [ "$n" -ne "0" ]
-    then residual_force=$("checkforce" -c 0 $folder/OUTCAR | awk '/remainder/ {print $NF}' )
+    then
+    residual_force=$(sci2dec "$("checkforce" -c 0 $folder/OUTCAR | awk '/remainder/ {print $NF}')")
     force_diff=$(echo "scale = 7; ($force_prev - $residual_force) * 1000" | bc)  # meV/Angstrom averaged
+    force_diff_rounded=$(printf "%.4f" "$force_diff")
     force_prev=$residual_force
   elif [ -x "$(command -v checkforce)" ]
     then force_prev=$("checkforce" -c 0 $folder/OUTCAR | awk '/remainder/ {print $NF}' )
@@ -47,16 +55,17 @@ for i in {!(*_*),*_*}/CONTCAR; do
   if [ "$n" -ne "0" ]; then # the first line will not have a difference therefore ignore it
     energy_prev=$(sed "${n}q;d" data | awk '{print $3}')
     energy_diff=$(echo "scale = 7; ($energy_prev - $energy_per_atom) * 1000" | bc)
+    energy_diff_rounded=$(printf "%.4f" "$energy_diff")
     if [ -x "$(command -v checkforce)" ]
       then 
-      echo -n -e "\t${custom_tab}$energy_diff\t\t${custom_tab}$force_diff" >> data
+      echo -n -e "\t${custom_tab}$energy_diff_rounded\t\t${custom_tab}${custom_tab}$force_diff_rounded" >> data
     else
-      echo -n -e "\t${custom_tab}$energy_diff" >> data
+      echo -n -e "\t${custom_tab}$energy_diff_rounded" >> data
     fi
   fi
 
   echo -n -e "\n" >> data
-  let n=n+1
+  (( n=n+1 ))
   fi
   fi
   

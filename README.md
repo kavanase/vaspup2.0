@@ -71,6 +71,10 @@ Example output from `data-converge`:
 
 ![](Examples/data-converge_example.png)
 
+Example output from `data-converge-magnetic`:
+
+![](Examples/data-converge-magnetic_example.png)
+
 Note that, for semiconductor materials, a denser **_k_**-point mesh is typically required for accurate density of states and optical absorption spectra. See [Density of States & Absorption Spectrum Convergence](#density-of-states-and-absorption-spectrum-convergence) examples below.
 
 ### Ionic Dielectric Constant (DFPT) Convergence
@@ -126,7 +130,7 @@ pseudopotentials - determined by `ENMAX` in the `POTCAR` files) VASP appears to 
 (but with `Warning: PSMAXN too small for non-local potential` printed in the `OUTCAR` and `stdout`
 files), but the results for $\epsilon_{Ionic}$ begin to diverge.
 This is demonstrated in the [Dielectric_Constants_Convergence](Dielectric_Constants_Convergence.ipynb) Jupyter notebook
-("Region of Shit" red-zones).
+(red-zones).
 
 **Note that this `INCAR` is for calculating the _ionic contribution to the dielectric constant_. If you want to calculate other properties such as the elastic constant, you will need to change `INCAR` tages (e.g. `ISIF = 3` for elastic constants).**
 
@@ -215,7 +219,7 @@ calculations and decide what needs to be changed for the caculations to be succe
 `NCORE` in `INCAR` to avoid parallelisation errors, increase `job` CPU hours to allow calculation
 to converge in time etc.), then re-run `generate-converge`. Also, if only some of the calculations
 failed, it is usually obvious from the output of `data-converge` in this case (Hint: they're the
-ones with batshit crazy energies), now go fix those calculations!
+ones with craaazy energies), so you should look at their outputs and see what went wrong.
 
 ##### `integer expression expected`
 
