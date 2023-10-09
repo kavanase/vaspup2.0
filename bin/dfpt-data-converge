@@ -37,11 +37,11 @@ for i in {!(*_*),*_*}/CONTCAR; do
 
   if [ "$n" -ne "0" ]; then # the first line will not have a difference therefore ignore it
     prev100=$(sed "${n}q;d" data | awk '{print $2}' )
-    diff100=$(echo "$prev100 - $ionic_dielectric_tensor100" | bc)
+    diff100=$(printf "%.4f" "$(echo "scale=4; $prev100 - $ionic_dielectric_tensor100" | bc)")
     prev010=$(sed "${n}q;d" data | awk '{print $3}' )
-    diff010=$(echo "$prev010 - $ionic_dielectric_tensor010" | bc)
+    diff010=$(printf "%.4f" "$(echo "scale=4; $prev010 - $ionic_dielectric_tensor010" | bc)")
     prev001=$(sed "${n}q;d" data | awk '{print $4}' )
-    diff001=$(echo "$prev001 - $ionic_dielectric_tensor001" | bc)
+    diff001=$(printf "%.4f" "$(echo "scale=4; $prev001 - $ionic_dielectric_tensor001" | bc)")
 
     echo -n -e "\t$diff100 \t $diff010 \t $diff001" >> data
   fi
