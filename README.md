@@ -238,6 +238,8 @@ in the `CONFIG` file is commented out.
 
 ## Tips
 
+### **_k_**-point Convergence Testing Setup
+
 For **_k_**-point convergence testing (of ground-state energy or
 $\epsilon_{Ionic}$),
 the **_k_**-point meshes to be tested must be explicitly provided in the `CONFIG` file
@@ -272,6 +274,8 @@ $ kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff}
 
 This script uses the excellent [kgrid](https://github.com/WMD-group/kgrid) package developed by Adam Jackson to generate appropriate **_k_**-point meshes corresponding to a given real-space length cutoff (in Angstrom).
 
+### Optical Dielectric Constant Convergence
+
 A general recommendation for DFT-calculated dielectric constants is to converge the predicted value to within 0.1, at least, though this of course depends on the target property!
 For example, this criterion typically gives a well-converged optical absorption spectrum, something which can be quickly verified visually, using:
 
@@ -280,6 +284,10 @@ for i in nbands_*; do cd $i; sumo-optplot --ymax 2e6 --xmax 4; cd ..; done
 ```
 
 then look at the `absorption.pdf` files in each directory.
+
+### Semi-Local (GGA) vs Hybrid DFT Convergence
+
+_Usually_ we expect mostly equivalent energy convergence with respect to _k_-points / basis set for semi-local (GGA) and hybrid DFT. _**However,**_ this may not be the case when there is a major qualitative change in behaviour between semi-local/hybrid DFT, such as going from metallic at the GGA level to semiconducting with hybrid DFT – which can occur for relatively low band gap systems. In these cases, it can be worth performing the convergence tests with hybrid DFT to see if convergence is reached at lower _k_-point densities / basis set sizes.
 
 ## Density of States and Absorption Spectrum Convergence
 
