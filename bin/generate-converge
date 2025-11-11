@@ -17,7 +17,7 @@ source input/CONFIG
 if [ "$conv_encut" -eq "1" ]; then
   mkdir cutoff_converge
   cd cutoff_converge
-  for i in $(eval echo "{$encut_start..$encut_end..$encut_step}"); do
+  for i in $(seq "$encut_start" "$encut_step" "$encut_end"); do
     if [ "$i" -gt 999 ]; then
     dirname="e_$i" # Add underscore to ensure correct ordering for data-converge
     else
