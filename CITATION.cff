@@ -4,6 +4,10 @@ authors:
 - family-names: "Kavanagh"
   given-names: "Seán R."
   orcid: "https://orcid.org/0000-0003-4577-9647"
+- family-names: "Riebesell"
+  given-names: "Janosh"
+- family-names: "Meng"
+  given-names: "Xiangchao"
 title: "vaspup2.0"
 version: 1.0
 doi: 10.5281/zenodo.8408542
@@ -15,8 +19,11 @@ references:
     - family-names: "Kavanagh"
       given-names: "Seán R."
       orcid: "https://orcid.org/0000-0003-4577-9647"
-      email: s.kavanagh19@imperial.ac.uk
       website: https://seankavanagh.com
+    - family-names: "Riebesell"
+      given-names: "Janosh"
+    - family-names: "Meng"
+      given-names: "Xiangchao"
     title: vaspup2.0
     version: 1.0
     doi: 10.5281/zenodo.8408542
