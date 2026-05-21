@@ -69,11 +69,11 @@ should be run separately within the folders named `kpoint_converge` and `cutoff_
 
 Example output from `data-converge`:
 
-![](Examples/data-converge_example.png)
+![](examples/data-converge_example.png)
 
 Example output from `data-converge-magnetic`:
 
-![](Examples/data-converge-magnetic_example.png)
+![](examples/data-converge-magnetic_example.png)
 
 Note that, for semiconductor materials, a denser **_k_**-point mesh is typically required for accurate density of states and optical absorption spectra. See [Density of States & Absorption Spectrum Convergence](#density-of-states-and-absorption-spectrum-convergence) examples below.
 
@@ -122,7 +122,7 @@ should be run separately within the folders named `kpoint_converge` and `cutoff_
 
 Example output from `dfpt-data-converge`:
 
-![](Examples/dfpt-data-converge_example.png)
+![](examples/dfpt-data-converge_example.png)
 
 **Beware `Warning: PSMAXN too small for non-local potential` (in `OUTCAR` and `stdout` files) at too high `ENCUT`!**
 It has been observed that when too large an `ENCUT` is used (depending on the 'hardness' of the
@@ -183,7 +183,7 @@ X, Y and Z components of the `frequency dependent      REAL DIELECTRIC FUNCTION`
 
 Example output from `nbands-epsopt-data-converge`:
 
-![](Examples/nbands-epsopt-data-converge_example.png)
+![](examples/nbands-epsopt-data-converge_example.png)
 
 #### Note
 
@@ -294,9 +294,9 @@ _Usually_ we expect mostly equivalent energy convergence with respect to _k_-poi
 While the total energy and high-frequency dielectric constant $\epsilon_{Optic}$ were converged to within 1 meV/atom and 0.1 respectively at a **_k_**-point mesh of 3x3x3, convergence of the density of states and absorption spectrum are not reached until much higher **_k_**-point densities of 6x6x6.
 Note that use of tetrahedron smearing (`ISMEAR = -5`) will typically give better convergence of the density of states (i.e. converged at lower k-point densities) than Gaussian smearing (`ISMEAR = 0`), and is absolutely essential for optical absorption calculations.
 
-![](Examples/Cs2SnI6_dos.gif)
+![](examples/Cs2SnI6_dos.gif)
 
-![](Examples/Cs2SnI6_absorption.gif)
+![](examples/Cs2SnI6_absorption.gif)
 
 
 ## Citation
