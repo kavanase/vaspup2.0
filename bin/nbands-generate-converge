@@ -1,5 +1,9 @@
 #!/bin/bash
 # vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
+
+# shellcheck source=bin/vaspup_utils.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/vaspup_utils.sh"
+
 # Check all needed files exist
 
 [ ! -f input/CONFIG ] && echo "CONFIG file not found in ./input/ directory" && exit
@@ -43,7 +47,7 @@ if [ "$conv_nbands" -eq "1" ]; then
     cp ../../input/INCAR .
     cp ../../input/POTCAR .
     cp ../../input/POSCAR .
-    sed -i "s/NBANDS .*$/NBANDS  = $i/g" INCAR
+    sedi "s/NBANDS .*$/NBANDS  = $i/g" INCAR
     [ -f ../../input/job ] && cp ../../input/job .
     [ -f ../../input/vdw_kernel.bindat ] && cp ../../input/vdw_kernel.bindat .
 

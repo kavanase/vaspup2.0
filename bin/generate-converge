@@ -1,5 +1,9 @@
 #!/bin/bash
 # vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
+
+# shellcheck source=bin/vaspup_utils.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/vaspup_utils.sh"
+
 # Check all needed files exist
 
 [ ! -f input/CONFIG ] && echo "CONFIG file not found in ./input/ directory" && exit
@@ -34,7 +38,7 @@ if [ "$conv_encut" -eq "1" ]; then
     cp ../../input/POTCAR .
     cp ../../input/POSCAR .
     [ -f ../../input/vdw_kernel.bindat ] && cp ../../input/vdw_kernel.bindat .
-    sed -i "s/ENCUT .*$/ENCUT  = $i eV/g" INCAR
+    sedi "s/ENCUT .*$/ENCUT  = $i eV/g" INCAR
     [ -f ../../input/job ] && cp ../../input/job .
 
     [ "$run_vasp" -eq "1" ] && "$submit_cmd" "$job_name_flag" "e${i}_${name}" job
@@ -69,7 +73,7 @@ if [ "$conv_kpoint" -eq "1" ]; then
     [ -f ../../input/job ] && cp ../../input/job .
     [ -f ../../input/vdw_kernel.bindat ] && cp ../../input/vdw_kernel.bindat .
 
-    sed -i "4s/.*/${i}/" KPOINTS
+    sedi "4s/.*/${i}/" KPOINTS
     
     [ "$run_vasp" -eq "1" ] && "$submit_cmd" "$job_name_flag" "k${sub//,/_}_${name}" job
     let n=n+1

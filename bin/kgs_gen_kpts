@@ -2,7 +2,9 @@
 # vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
 # Cheeky little script to generate convergence-test kpoints using
 # the excellent kgrid package.
-# Doesn't work on Mac OSX unless you install GNU sed
+
+# shellcheck source=bin/vaspup_utils.sh
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/vaspup_utils.sh"
 
 # Usage: (in "input" directory with POSCAR and CONFIG files present)
 # (and "kpoints" mentioned in CONFIG file)
@@ -33,4 +35,4 @@ done
 shift $((OPTIND - 1))
 
 kpts=$(kgrid-series --min ${min} --max ${max} POSCAR | awk 'NR>2,ORS="," {print $3,$4,$5}')
-sed -i "s/kpoints.*/kpoints=\'$kpts\'/" ./CONFIG
+sedi "s/kpoints.*/kpoints=\'$kpts\'/" ./CONFIG
