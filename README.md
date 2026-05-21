@@ -272,7 +272,7 @@ $ kgs_gen_kpts {min_real_space_cutoff} {max_real_space_cutoff}
 (Default: min = 5, max = 25 – max likely needs to be increased for metals)
 ```
 
-This script uses the excellent [kgrid](https://github.com/WMD-group/kgrid) package developed by Adam Jackson to generate appropriate **_k_**-point meshes corresponding to a given real-space length cutoff (in Angstrom).
+This script uses the excellent [kgrid](https://github.com/WMD-group/kgrid) package developed by Adam Jackson to generate appropriate **_k_**-point meshes corresponding to a given real-space length cutoff (in Angstrom). Specifically, it calls the `kgrid-series` command provided by `kgrid`, so make sure this package is installed and on your `PATH`.
 
 ### Optical Dielectric Constant Convergence
 
