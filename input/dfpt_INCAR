@@ -1,22 +1,20 @@
 ALGO = Normal
 LEPSILON = True  # DFPT Calculation
 ISYM = -1  # Symmetry off for DFPT (if using NCORE)
-EDIFF = 1e-07
-EDIFFG = -0.003
+EDIFF = 1e-07  # tight EDIFF
 ENCUT = 300  # Need ENCUT/ENMAX tag for (dfpt-)generate-converge
 GGA = Ps  # PBEsol GGA DFT Functional
 IBRION = 8  # Calculate second derivatives with DFPT
+NSW = 1  # One ionic step; required for ionic dielectric contribution
 ISIF = 2  # Keep cell volume fixed for DFPT calcs
-ISMEAR = 0
 
+ISMEAR = 0
 ISPIN = 2  # can be turned off for non-magnetic systems
 LASPH = True
 LORBIT = 11
 LREAL = False  # Reciprocal space projections for accurate forces
-LWAVE = True
 NEDOS = 2000
 NELM = 100
-NSW = 1  # One ionic step
 PREC = Accurate
 SIGMA = 0.05
 
