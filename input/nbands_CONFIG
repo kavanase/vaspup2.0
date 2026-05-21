@@ -10,4 +10,6 @@ nbands_end="300"		# Value to end NBANDS calcs on
 nbands_step="20"		# NBANDS increment
 
 run_vasp="1"		# Run VASP after generating the files? (1 for ON, 0 for OFF)
+submit_cmd="qsub"	# Job submission command ("qsub" for SGE, "sbatch" for SLURM)
+job_name_flag="-N"	# Flag to set the job name ("-N" for SGE qsub, "-J" for SLURM sbatch)
 #name="CdTe" # Optional name to append to each jobname (remove "#")

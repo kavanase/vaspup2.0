@@ -13,6 +13,10 @@
 # Read CONFIG file to get parameters
 source input/CONFIG
 
+# Job submission command and job-name flag (defaults keep older CONFIG files working)
+submit_cmd="${submit_cmd:-qsub}"      # e.g. "qsub" (SGE) or "sbatch" (SLURM)
+job_name_flag="${job_name_flag:--N}"  # e.g. "-N" (SGE qsub) or "-J" (SLURM sbatch)
+
 # Converge ENCUT
 if [ "$conv_encut" -eq "1" ]; then
   mkdir cutoff_converge
@@ -33,7 +37,7 @@ if [ "$conv_encut" -eq "1" ]; then
     sed -i "s/ENCUT .*$/ENCUT  = $i eV/g" INCAR
     [ -f ../../input/job ] && cp ../../input/job .
 
-    [ "$run_vasp" -eq "1" ] && qsub -N e${i}_${name} job
+    [ "$run_vasp" -eq "1" ] && "$submit_cmd" "$job_name_flag" "e${i}_${name}" job
     cd ..
   done
   cd ..
@@ -67,7 +71,7 @@ if [ "$conv_kpoint" -eq "1" ]; then
 
     sed -i "4s/.*/${i}/" KPOINTS
     
-    [ "$run_vasp" -eq "1" ] && qsub -N k${sub//,/_}_${name} job
+    [ "$run_vasp" -eq "1" ] && "$submit_cmd" "$job_name_flag" "k${sub//,/_}_${name}" job
     let n=n+1
     cd ..
   done

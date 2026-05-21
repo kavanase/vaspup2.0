@@ -60,7 +60,7 @@ For example, the `cutoff_converge/e450` folder will contain the `ENCUT = 450 eV`
 the `kpoint_converge/k664` folder will contain the calculation with a **_k_**-mesh of
 $6\times6\times4$.
 
-Note that `vaspup2.0` uses the SGE `qsub` job submission command by default, but this can easily be modified in the bash scripts.
+Note that `vaspup2.0` uses the SGE `qsub` job submission command by default, but this can be changed in the `CONFIG` file via the `submit_cmd` and `job_name_flag` settings (e.g. `submit_cmd="sbatch"` and `job_name_flag="-J"` for SLURM).
 
 - Once the calculations have finished running, the `data-converge` script can be used to extract the
 total energies from the VASP output. This script will print the convergence data to the terminal

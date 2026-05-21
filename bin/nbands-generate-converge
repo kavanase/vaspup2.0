@@ -13,6 +13,10 @@
 # Read CONFIG file to get parameters
 source input/CONFIG
 
+# Job submission command and job-name flag (defaults keep older CONFIG files working)
+submit_cmd="${submit_cmd:-qsub}"      # e.g. "qsub" (SGE) or "sbatch" (SLURM)
+job_name_flag="${job_name_flag:--N}"  # e.g. "-N" (SGE qsub) or "-J" (SLURM sbatch)
+
 # Check that NBANDS flag is in INCAR
 if ! grep -q "NBANDS" input/INCAR
 then 
@@ -43,7 +47,7 @@ if [ "$conv_nbands" -eq "1" ]; then
     [ -f ../../input/job ] && cp ../../input/job .
     [ -f ../../input/vdw_kernel.bindat ] && cp ../../input/vdw_kernel.bindat .
 
-    [ "$run_vasp" -eq "1" ] && qsub -N nbands${i}_${name} job
+    [ "$run_vasp" -eq "1" ] && "$submit_cmd" "$job_name_flag" "nbands${i}_${name}" job
     cd ..
   done
   cd ..
