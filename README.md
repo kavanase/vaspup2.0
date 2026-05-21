@@ -15,7 +15,7 @@ for ground-state energy convergence testing and `POTCAR` generation.
 - Convergence testing of $\epsilon_{Ionic}$ (ionic contribution to the static dielectric constant
   $\epsilon_0 = \epsilon_{Ionic} + \epsilon_{Optic}$) with respect to `ENCUT` and **_k_**-point density, 
   calculated with Density Functional Perturbation Theory (DFPT).
-- Convergence testing of $\epsilon_{Optic}$ (optical / high-frequency dielectric constant) with respect to `NBANDS`, calculated with using the method of [Furthmüller et al.](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.73.045112) (`LOPTICS = True`).
+- Convergence testing of $\epsilon_{Optic}$ (optical / high-frequency dielectric constant) with respect to `NBANDS`, calculated using the method of [Furthmüller et al.](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.73.045112) (`LOPTICS = True`).
 
 ## Installation
 
@@ -27,6 +27,8 @@ git clone https://github.com/kavanase/vaspup2.0
 echo "export PATH=\"${PWD}/vaspup2.0/bin:\${PATH}\"" >> ~/.bashrc
 source ~/.bashrc  # Update the current shell
 ```
+
+Change `.bashrc` to `.zshrc` if running on MacOS.
 
 ## Implementation
 
@@ -117,7 +119,7 @@ extract the values for the ionic contribution to the static dielectric constant
 $\epsilon_{Ionic}$ (specifically the
 diagonal terms from the `MACROSCOPIC STATIC DIELECTRIC TENSOR IONIC CONTRIBUTION` in the VASP
 `OUTCAR` files). This script will print the convergence data to the terminal
-(as shown below) as well as saving to a file named `Convergence_Data`. The `data-converge` script
+(as shown below) as well as saving to a file named `DFPT_Convergence_Data`. The `dfpt-data-converge` script
 should be run separately within the folders named `kpoint_converge` and `cutoff_converge`.
 
 Example output from `dfpt-data-converge`:
@@ -132,7 +134,7 @@ files), but the results for $\epsilon_{Ionic}$ begin to diverge.
 This is demonstrated in the [Dielectric_Constants_Convergence](Dielectric_Constants_Convergence.ipynb) Jupyter notebook
 (red-zones).
 
-**Note that this `INCAR` is for calculating the _ionic contribution to the dielectric constant_. If you want to calculate other properties such as the elastic constant, you will need to change `INCAR` tages (e.g. `ISIF = 3` for elastic constants).**
+**Note that this `INCAR` is for calculating the _ionic contribution to the dielectric constant_. If you want to calculate other properties such as the elastic constant, you will need to change `INCAR` tags (e.g. `ISIF = 3` for elastic constants).**
 
 ### Optical Dielectric Constant Convergence
 
@@ -145,7 +147,7 @@ unoccupied bands required for convergence, as demonstrated in the
 Thus, calculation of the $\epsilon_{Optic}$ should be accompanied by a convergence test with respect to this parameter.
 Note that the calculated value for $\epsilon_{Optic}$ is typically not sensitive to either the plane wave kinetic energy cutoff `ENCUT` or the **_k_**-point density, **assuming you are using values that are well-converged with respect to
 the ground-state energy!**
-Additionally, note that the_optical absorption spectrum_, as with the density of states, typically requires a denser k-point mesh to give a converged result, than for total energy or optical dielectric constant. See [Density of States & Absorption Spectrum Convergence](#density-of-states-and-absorption-spectrum-convergence) examples below.
+Additionally, note that the _optical absorption spectrum_, as with the density of states, typically requires a denser k-point mesh to give a converged result, than for total energy or optical dielectric constant. See [Density of States & Absorption Spectrum Convergence](#density-of-states-and-absorption-spectrum-convergence) examples below.
 
 To quickly set up an `NBANDS` convergence test for $\epsilon_{Optic}$,
 the following steps are required:
@@ -215,7 +217,7 @@ of `NPAR` = # of cores / (`NCORE` * `KPAR`). So ideally these parameters should 
 If `data-converge` gives the output `(standard_in) 1: syntax error`, then it means that `vaspup2.0`
 is having trouble parsing some or all of the calculation results. Typically, this means that some
 or all of the calculations failed, and so the solution is to look at the output files of the
-calculations and decide what needs to be changed for the caculations to be successful (e.g. reduce
+calculations and decide what needs to be changed for the calculations to be successful (e.g. reduce
 `NCORE` in `INCAR` to avoid parallelisation errors, increase `job` CPU hours to allow calculation
 to converge in time etc.), then re-run `generate-converge`. Also, if only some of the calculations
 failed, it is usually obvious from the output of `data-converge` in this case (Hint: they're the
