@@ -30,7 +30,6 @@ if [ "$conv_encut" -eq "1" ]; then
     cp ../../input/POTCAR .
     cp ../../input/POSCAR .
     [ -f ../../input/vdw_kernel.bindat ] && cp ../../input/vdw_kernel.bindat .
-    sed -i "s/ENMAX .*$/ENMAX  = $i eV/g" INCAR
     sed -i "s/ENCUT .*$/ENCUT  = $i eV/g" INCAR
     [ -f ../../input/job ] && cp ../../input/job .
 
