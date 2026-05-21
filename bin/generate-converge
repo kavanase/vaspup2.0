@@ -24,7 +24,7 @@ job_name_flag="${job_name_flag:--N}"  # e.g. "-N" (SGE qsub) or "-J" (SLURM sbat
 # Converge ENCUT
 if [ "$conv_encut" -eq "1" ]; then
   mkdir cutoff_converge
-  cd cutoff_converge
+  cd cutoff_converge || exit 1
   for i in $(seq "$encut_start" "$encut_step" "$encut_end"); do
     if [ "$i" -gt 999 ]; then
     dirname="e_$i" # Add underscore to ensure correct ordering for data-converge
@@ -32,7 +32,7 @@ if [ "$conv_encut" -eq "1" ]; then
     dirname="e$i"
     fi
     mkdir "$dirname"
-    cd "$dirname"
+    cd "$dirname" || exit 1
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
     cp ../../input/POTCAR .
@@ -50,7 +50,7 @@ fi
 # Converge k-points
 if [ "$conv_kpoint" -eq "1" ]; then
   mkdir "kpoint_converge"
-  cd "kpoint_converge"
+  cd "kpoint_converge" || exit 1
   n=1;
 
   IFS=',' read -ra ADDR <<< "$kpoints" # Split the kpoints by comma
@@ -65,7 +65,7 @@ if [ "$conv_kpoint" -eq "1" ]; then
     fi
 
     mkdir "k$sub"
-    cd "k$sub"
+    cd "k$sub" || exit 1
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
     cp ../../input/POTCAR .

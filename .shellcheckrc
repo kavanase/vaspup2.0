@@ -1,0 +1,3 @@
+# vaspup2.0 shellcheck configuration
+disable=SC1091  # don't follow sourced files (vaspup_utils.sh is resolved at runtime)
+disable=SC2154  # CONFIG variables are populated via `source input/CONFIG` at runtime

@@ -30,7 +30,7 @@ fi
 # Converge NBANDS
 if [ "$conv_nbands" -eq "1" ]; then
   mkdir nbands_converge
-  cd nbands_converge
+  cd nbands_converge || exit 1
   for i in $(seq "$nbands_start" "$nbands_step" "$nbands_end"); do
     sub=""
     if [ "$i" -gt 999 ]; then # Add double underscore for >999 to ensure correct ordering for nbands-epsopt-data-converge
@@ -41,7 +41,7 @@ if [ "$conv_nbands" -eq "1" ]; then
 
     dirname="nbands$sub$i" 
     mkdir "$dirname"
-    cd "$dirname"
+    cd "$dirname" || exit 1
 
     cp ../../input/KPOINTS .
     cp ../../input/INCAR .
