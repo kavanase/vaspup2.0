@@ -23,7 +23,7 @@ fi
 if [ "$conv_nbands" -eq "1" ]; then
   mkdir nbands_converge
   cd nbands_converge
-  for i in $(eval echo "{$nbands_start..$nbands_end..$nbands_step}"); do
+  for i in $(seq "$nbands_start" "$nbands_step" "$nbands_end"); do
     sub=""
     if [ "$i" -gt 999 ]; then # Add double underscore for >999 to ensure correct ordering for nbands-epsopt-data-converge
     sub="__"
