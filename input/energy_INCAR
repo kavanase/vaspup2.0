@@ -1,6 +1,6 @@
 ALGO = Normal
 EDIFF = 1e-07
-ENCUT = 300  # Need ENCUT/ENMAX included in the INCAR for vaspup2.0 to converge-test this parameter
+ENCUT = 300  # Need ENCUT included in the INCAR for vaspup2.0 to converge-test this parameter
 GGA = Ps  # PBEsol
 IBRION = -1  # singleshot calcs
 ISMEAR = 0  # Note that ISMEAR = -5 will give better DOS convergence wrt kpoints (but won't work with 1x1x1 grid)

@@ -3,6 +3,7 @@
 # revised by Xiangchao Meng (xiangchao.meng.22@ucl.ac.uk), 08/10/2023
 
 # shellcheck source=bin/vaspup_utils.sh
+# load check_nelm(), sci2dec(), count_atoms() utilities
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/vaspup_utils.sh"
 
 rm -f data # delete data file if exists

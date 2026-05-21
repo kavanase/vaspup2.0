@@ -2,6 +2,7 @@
 # vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
 
 # shellcheck source=bin/vaspup_utils.sh
+# load check_nelm(), sci2dec(), count_atoms() utilities
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/vaspup_utils.sh"
 
 rm -f data # delete data file if exists

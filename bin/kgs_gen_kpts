@@ -1,9 +1,9 @@
 #!/bin/bash
 # vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
-# Cheeky little script to generate convergence-test kpoints using
-# the excellent kgrid package.
+# generate convergence-test kpoints using kgrid
 
 # shellcheck source=bin/vaspup_utils.sh
+# loads sedi() in-place sed function (for GNU/BSD compatibility)
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/vaspup_utils.sh"
 
 # Usage: (in "input" directory with POSCAR and CONFIG files present)

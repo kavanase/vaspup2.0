@@ -2,6 +2,7 @@
 # vaspup2.0 - Seán Kavanagh (sean.kavanagh.19@ucl.ac.uk), 2023
 
 # shellcheck source=bin/vaspup_utils.sh
+# loads sedi() in-place sed function (for GNU/BSD compatibility)
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/vaspup_utils.sh"
 
 # Check all needed files exist
